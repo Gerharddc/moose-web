@@ -1,8 +1,7 @@
 // Copyright 2017 Gerhard de Clercq
 
 import React, { Component } from 'react';
-import { Col, Panel, ProgressBar, Grid, Row, Button,
-ButtonToolbar } from 'react-bootstrap';
+import ProgressBar from './ProgressBar'
 
 export default class PrintInfoPanel extends Component {
 	constructor(props) {
@@ -16,21 +15,22 @@ export default class PrintInfoPanel extends Component {
 
 	render() {
 		return (
-			<Col xs={6} md={4}>
-				<Panel header={(<h3>Print info</h3>)} bsStyle="info">
-						<div style={{textAlign: 'left'}}>
-								<Row style={{marginBottom: '10px'}}>
-									<Col xs={6}><b>Status: </b>{this.state.status}</Col>
-									<Col xs={6}><b>ETA: </b>{this.state.eta}</Col>
-								</Row>
-								<ProgressBar now={this.props.progress}/>
-								<ButtonToolbar>
-									<Button bsStyle="success">Start</Button>
-									<Button bsStyle="danger">Stop</Button>
-								</ButtonToolbar>
+			<div className="col col-xs-6 col-md-4">
+				<div className="card">
+					<h3 className="card-header">Print info</h3>
+					<div className="card-block">
+						<p className="card-text"><b>Status: </b>{this.state.status}</p>
+						<p className="card-text"><b>ETA: </b>{this.state.eta}</p>
+						<p>
+  						<ProgressBar percent={75}/>
+						</p>
+						<div className="btn-group" role="group" aria-label="Basic example">
+  						<button type="button" className="btn btn-success">Start</button>
+  						<button type="button" className="btn btn-danger">Stop</button>
 						</div>
-				</Panel>
-			</Col>
+					</div>
+				</div>
+			</div>
 		);
 	}
 }

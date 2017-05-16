@@ -4,10 +4,12 @@
   "private": true,
   "dependencies": {
     "@trendmicro/react-toggle-switch": "^0.5.4",
+    "bootstrap": "4.0.0-alpha.6",
     "react": "^15.5.4",
-    "react-bootstrap": "^0.31.0",
     "react-dom": "^15.5.4",
-    "react-player": "^0.18.0"
+    "react-player": "^0.18.0",
+    "react-redux": "^5.0.4",
+    "redux": "^3.6.0"
   },
   "devDependencies": {
     "react-scripts": "0.9.5"

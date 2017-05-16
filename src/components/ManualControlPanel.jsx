@@ -1,9 +1,8 @@
 // Copyright 2017 Gerhard de Clercq
 
 import React, { Component } from 'react';
-import { Col, Panel, ControlLabel, FormControl, FormGroup, Row,
-Button, ButtonToolbar } from 'react-bootstrap';
 import ToggleSwitch from '@trendmicro/react-toggle-switch';
+import Heaters from './Heaters'
 
 export default class ManualControlPanel extends Component {
   constructor(props) {
@@ -23,56 +22,45 @@ export default class ManualControlPanel extends Component {
 
   render() {
     return (
-      <Col xs={12} md={8}>
-        <Panel header={(<h3>Manual control</h3>)}>
-          <Row style={{marginBottom: '10px'}} bsClass="vertcenter row">
-					  <Col xs={4}>
-              <FormGroup>
-                <ControlLabel>Amount</ControlLabel>
-                <FormControl type="number" value={this.state.moveAmount}/>
-              </FormGroup>
-            </Col>
-					  <Col xs={4}>
-              <FormGroup>
-                <ControlLabel>Speed</ControlLabel>
-                <FormControl type="number" value={this.state.moveSpeed}/>
-              </FormGroup>
-            </Col>
-            <Col xs={4} height="100%">
-              <ToggleSwitch checked={this.state.moveForward}
+      <div className="col col-xs-12 col-md-8">
+        <div className="card">
+          <h3 className="card-header">Manual control</h3>
+          <div className="container">
+            <br/>
+            <div className="row margin-tb">
+              <div className="col">
+                <div className="input-group">
+                  <div className="input-group-addon">Distance</div>
+                  <input type="number" className="form-control"/>
+                  <div className="input-group-addon">mm</div>
+                </div>
+              </div>
+              <div className="col">
+                <div className="input-group">
+                  <div className="input-group-addon">Speed</div>
+                  <input type="number" className="form-control"/>
+                  <div className="input-group-addon">mm/s</div>
+                </div>
+              </div>
+              <div className="col col-3 vertcenter">
+                <ToggleSwitch checked={this.state.moveForward}
                   onChange={(event) => 
                   {this.setState({moveForward: !this.state.moveForward})}}/>
                 {this.state.moveForward ? "Forward" : "Backward"}
-            </Col>
-					</Row>
-          <ButtonToolbar>
-            <Button>Move X</Button>
-            <Button>Move Y</Button>
-            <Button>Move Z</Button>
-            <Button>Move E</Button>
-          </ButtonToolbar>
-          <Row style={{marginBottom: '10px', marginTop: '20px'}} bsClass="vertcenter row">
-            <Col xs={3} height="100%">
-              <h3>Extruder</h3>
-            </Col>
-            <Col xs={4} height="100%">
-              <p style={{marginTop: "20px"}}><b>Actual temp:</b> {this.state.extruderTemp}</p>
-            </Col>
-					  <Col xs={3}>
-              <FormGroup>
-                <ControlLabel>Target temp</ControlLabel>
-                <FormControl type="number" value={this.state.extruderTarget}/>
-              </FormGroup>
-            </Col>
-            <Col xs={2} height="100%">
-              <ToggleSwitch checked={this.state.heatingExtruder}
-                  onChange={(event) => 
-                  {this.setState({heatingExtruder: !this.state.heatingExtruder})}}/>
-                {this.state.heatingExtruder ? "On" : "Off"}
-            </Col>
-					</Row>
-        </Panel>
-      </Col>
+              </div>
+            </div>
+            <br/>
+            <div className="btn-group" role="group" aria-label="Basic example">
+  					  <button type="button" className="btn btn-primary">Move X</button>
+  						<button type="button" className="btn">Move Y</button>
+              <button type="button" className="btn btn-primary">Move Z</button>
+              <button type="button" className="btn">Move E</button>
+						</div>
+            <br/><br/>
+            <Heaters/>
+          </div>
+        </div>
+      </div>
     );
   }
 }

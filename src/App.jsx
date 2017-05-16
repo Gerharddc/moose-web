@@ -1,10 +1,9 @@
 // Copyright 2017 Gerhard de Clercq
 
 import React, { Component } from 'react';
-import { Jumbotron, Grid, Col, Panel } from 'react-bootstrap';
 import ManualControlPanel from './components/ManualControlPanel';
 import PrintInfoPanel from './components/PrintInfoPanel';
-import CameraPanel from './components/CameraPanel';
+//import CameraPanel from './components/CameraPanel';
 import './App.css';
 
 import logo from './img/logo.svg';
@@ -18,20 +17,28 @@ class App extends Component {
   
   render() {
     return (
-      <div className="App">
-        <Jumbotron>
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1>Moose Printer</h1>
-          <p>Because bigger is better!</p>
-        </Jumbotron>
+      <div>
+        <div className="jumbotron vcenter-text">
+          <div className="row justify-content-center">
+            <div className="col-1 hidden-sm-down"/>
+            <div className="col col-auto">
+              <h1 className="display-3">Moose Printer</h1>
+              <p>Because bigger is better!</p>
+            </div>
+            <div className="col col-md-1 col-auto">
+              <img src={logo} className="App-logo" alt="logo" />
+            </div>
+          </div>
+        </div>
 
-        <Grid className="Main-grid">
-          <ManualControlPanel/>
-          <PrintInfoPanel/>
-          <CameraPanel/>
-        </Grid>
+        <div className="container maingrid">
+          <div className="row">
+            <ManualControlPanel/>
+            <PrintInfoPanel/>
+          </div>
+        </div>
 
-        <footer style={{marginBottom: '10px'}}>
+        <footer className="footer">
           © Gerhard de Clercq
         </footer>
       </div>
