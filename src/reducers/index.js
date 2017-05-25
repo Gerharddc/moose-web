@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux'
 import heaters from './heaters'
 
-const mooseApp = combineReducers({
+const mooseReducer = combineReducers({
   heaters
 })
 
-export default mooseApp
+export default mooseReducer
