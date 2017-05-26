@@ -1,8 +1,12 @@
-import { combineReducers } from 'redux'
-import heaters from './heaters'
+// Copyright 2017 Gerhard de Clercq
+
+import { combineReducers } from 'redux';
+import heaters from './heaters';
+import motion from './motion';
 
 const mooseReducer = combineReducers({
-  heaters
-})
+	heaters,
+	motion
+});
 
-export default mooseReducer
+export default mooseReducer;

@@ -17,17 +17,19 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './bootstrap-theme.min.css';
 
 let store = createStore(mooseReducer,
-    DefaultState,
-    applyMiddleware(thunkMiddleware));
+	DefaultState,
+	applyMiddleware(thunkMiddleware));
 
 ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
-  document.getElementById('root')
+	<Provider store={store}>
+		<App />
+	</Provider>,
+	document.getElementById('root')
 );
 
 PrinterSocket.runOnOpen(() => {
-    store.dispatch(getHeaters());
+	store.dispatch(getHeaters());
 });
+
+PrinterSocket.setStore(store);
 

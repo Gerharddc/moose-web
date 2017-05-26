@@ -7,9 +7,9 @@ export default class PrintInfoPanel extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-				status: 'No job',
-				progress: 0,
-				eta: 'N/A'
+			status: 'No job',
+			progress: 0,
+			eta: 'N/A'
 		}
 	}
 
@@ -22,11 +22,11 @@ export default class PrintInfoPanel extends Component {
 						<p className="card-text"><b>Status: </b>{this.state.status}</p>
 						<p className="card-text"><b>ETA: </b>{this.state.eta}</p>
 						<p>
-  						<ProgressBar percent={75}/>
+							<ProgressBar percent={75}/>
 						</p>
 						<div className="btn-group" role="group" aria-label="Basic example">
-  						<button type="button" className="btn btn-success">Start</button>
-  						<button type="button" className="btn btn-danger">Stop</button>
+							<button type="button" className="btn btn-success">Start</button>
+							<button type="button" className="btn btn-danger">Stop</button>
 						</div>
 					</div>
 				</div>

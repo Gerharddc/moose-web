@@ -1,22 +1,11 @@
-const defHeaters = [
-  {
-    id: 'ex1',
-    displayName: 'Extuder',
-    isOn: false,
-    target: 200,
-    current: 25
-  },
-  {
-    id: 'ex1',
-    displayName: 'Bed',
-    isOn: false,
-    target: 200,
-    current: 25
-  }
-]
+const defMotion = {
+	distance: 10,
+	speed: 100,
+	forward: true
+};
 
 const DefaultState = {
-  heaters: defHeaters
-}
+	motion: defMotion
+};
 
-export default DefaultState
+export default DefaultState;
