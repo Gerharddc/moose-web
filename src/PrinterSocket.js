@@ -1,4 +1,5 @@
 import * as HeaterActions from "./actions/heaters"
+import * as WifiActions from "./actions/wifi"
 
 //let socket = new WebSocket("ws://localhost:8080");
 let socket = new WebSocket("ws://10.42.0.146:8080");
@@ -98,6 +99,16 @@ socket.onmessage = function (event) {
 						break;
 					default:
 						console.log('Unkown property: ' + event.data);
+				}
+				break;
+			case 'Wifi':
+				switch (msg.property) {
+					case 'ConnectedSSID':
+						store.dispatch(WifiActions.getConnectedSSID());
+						break;
+					case 'ConnectionState':
+						store.dispatch(WifiActions.getConnectionState());
+						break;
 				}
 				break;
 			default:
