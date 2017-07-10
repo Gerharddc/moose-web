@@ -1,6 +1,7 @@
 import * as HeaterActions from "./actions/heaters"
 
-let socket = new WebSocket("ws://localhost:8080");
+//let socket = new WebSocket("ws://localhost:8080");
+let socket = new WebSocket("ws://10.42.0.146:8080");
 let requestMap = new Map();
 let store;
 let runOnOpenFunc;
@@ -45,7 +46,7 @@ export default class PrinterSocket {
 				id = Math.random();
 			}
 
-			data['id'] = id.toString();
+			data['id'] = id;//.toString();
 
 			requestMap.set(id, { resolve, reject });
 
@@ -104,31 +105,37 @@ socket.onmessage = function (event) {
 		}
 	}
 	else {
-		if (!msg.hasOwnProperty('id')) {
-			alert('Invalid message from server');
-			console.log('Response lacks id: ' + event.data);
-			return;
-		}
+        if (!msg.hasOwnProperty('id')) {
+            alert('Invalid message from server');
+            console.log('Response lacks id: ' + event.data);
+            return;
+        }
 
-		let id = parseFloat(msg.id);
+        if (!msg.hasOwnProperty('response')) {
+            alert('Invalid message from server');
+            console.log('Response lacks response field: ' + event.data);
+            return;
+        }
 
-		if (!requestMap.has(id)) {
-			console.log('Unkown request id: ' + id);
-			return;
-		}
+        let id = parseFloat(msg.id);
 
-		if (msg.status === 'success') {
-			requestMap.get(id).resolve(msg);
-		}
-		else if (msg.status === 'error') {
-			// TODO: pass error
-			requestMap.get(id).reject();
-		}
-		else {
-			alert('Invalid message from server');
-			console.log('Unknown status: ' + event.data);
-		}
+        if (!requestMap.has(id)) {
+            console.log('Unkown request id: ' + id);
+            return;
+        }
 
-		requestMap.delete(msg.id)
+        if (msg.status === 'success') {
+            requestMap.get(id).resolve(msg.response);
+        }
+        else if (msg.status === 'error') {
+            // TODO: pass error
+            requestMap.get(id).reject();
+        }
+        else {
+            alert('Invalid message from server');
+            console.log('Unknown status: ' + event.data);
+        }
+
+        requestMap.delete(msg.id)
 	}
 };

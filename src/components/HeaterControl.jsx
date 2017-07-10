@@ -5,7 +5,7 @@ import ToggleSwitch from '@trendmicro/react-toggle-switch';
 
 export default class HeaterControl extends Component {
 	render() {
-		const { heater, actions } = this.props
+		const { heater, actions } = this.props;
 
 		return (
 			<div className="row margin-tb">

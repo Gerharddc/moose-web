@@ -1,3 +1,4 @@
+// @flow
 // Copyright 2017 Gerhard de Clercq
 
 import React from 'react';

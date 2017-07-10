@@ -3,10 +3,12 @@
 import { combineReducers } from 'redux';
 import heaters from './heaters';
 import motion from './motion';
+import wifi from './wifi';
 
 const mooseReducer = combineReducers({
 	heaters,
-	motion
+	motion,
+	wifi
 });
 
 export default mooseReducer;

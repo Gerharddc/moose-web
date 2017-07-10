@@ -14,12 +14,12 @@ export function getHeating(id) {
 		PrinterSocket.request({
 			request: 'GetHeating',
 			data: { id: id }
-		}).then(msg => {
-			console.log('setting heating to: ' + msg.heating + ' for: ' + id);
-			dispatch(setHeatingI(id, msg.heating))
-		}).catch(msg => {
+		}).then(resp => {
+			console.log('setting heating to: ' + resp + ' for: ' + id);
+			dispatch(setHeatingI(id, resp))
+		}).catch(resp => {
 			alert('Error communicating with printer');
-			console.log('Error getting heating: ' + msg);
+			console.log('Error getting heating: ' + resp);
 		});
 	}
 }
@@ -70,13 +70,13 @@ export function getHeaters() {
 		PrinterSocket.request({
 			request: 'GetHeaters',
 			data: {}
-		}).then(msg => {
+		}).then(response => {
 			// Clear the heaters before setting the new ones
 			dispatch({
 				type: 'CLEAR_HEATERS'
 			});
 
-			msg.heaters.forEach(id => {
+			response.forEach(id => {
 				console.log('Heater: ' + 1);
 				dispatch(getHeater(id));
 			})

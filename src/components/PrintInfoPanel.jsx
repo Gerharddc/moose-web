@@ -5,7 +5,7 @@ import ProgressBar from './ProgressBar'
 
 export default class PrintInfoPanel extends Component {
 	constructor(props) {
-		super(props)
+		super(props);
 		this.state = {
 			status: 'No job',
 			progress: 0,
@@ -31,6 +31,6 @@ export default class PrintInfoPanel extends Component {
 					</div>
 				</div>
 			</div>
-		);
+		)
 	}
 }
