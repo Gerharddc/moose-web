@@ -11,6 +11,9 @@ import * as MotionActions from '../actions/motion';
 class ManualControlPanel extends Component {
 	render() {
 		const { motion, actions } = this.props;
+		const moveAxis = function(axis) {
+            actions.moveAxis(motion.distance, motion.speed, motion.forward, axis)
+        };
 
 		return (
             <div className="col col-xs-12 col-md-8">
@@ -45,10 +48,14 @@ class ManualControlPanel extends Component {
                         </div>
                         <br/>
                         <div className="btn-group" role="group" aria-label="Basic example">
-                            <button type="button" className="btn btn-primary">Move X</button>
-                            <button type="button" className="btn">Move Y</button>
-                            <button type="button" className="btn btn-primary">Move Z</button>
-                            <button type="button" className="btn">Move E</button>
+                            <button type="button" className="btn btn-primary"
+                                    onClick={e => moveAxis('x')}>Move X</button>
+                            <button type="button" className="btn"
+                                    onClick={e => moveAxis('y')}>Move Y</button>
+                            <button type="button" className="btn btn-primary"
+                                    onClick={e => moveAxis('z')}>Move Z</button>
+                            <button type="button" className="btn"
+                                    onClick={e => moveAxis('e')}>Move E</button>
                         </div>
                         <br/><br/>
                         <Heaters/>

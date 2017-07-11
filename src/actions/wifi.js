@@ -94,6 +94,29 @@ export const selectSSID = (ssid) => {
         type: 'SET_SELECTED_SSID',
         ssid
     }
-}
+};
+
+export const setHostingtSSID = (ssid) => {
+    return {
+        type: 'SET_HOSTING_SSID',
+        ssid
+    }
+};
+
+export const setHostingPassphrase = (pwd) => {
+    return {
+        type: 'SET_HOSTING_PWD',
+        pwd
+    }
+};
+
+/*export const setWifiEnable = (enabled) => {
+    return {
+        type: 'SET_HOSTING_PWD',
+        enabled
+    }
+    // todo: function
+};*/
+
 
 /* On submit request error, reload with fresh value from server */

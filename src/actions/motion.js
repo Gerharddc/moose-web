@@ -20,3 +20,19 @@ export const setForward = (forward) => {
 		forward
 	}
 };
+
+export function moveAxis(distance, speed, forward, axis) {
+    return function (dispatch) {
+        PrinterSocket.request({
+            request: 'MoveAxis',
+            data: {
+                distance,
+                speed,
+                forward,
+                axis
+            }
+        }).catch(msg => {
+            console.log('Error moving axis: ' + msg);
+        });
+    }
+}

@@ -7,12 +7,12 @@ export default class SSIDControl extends Component {
         const { ssid, actions, selected, connected } = this.props;
 
         return (
-            <div className={"row margin-tb" + (selected ? " selected-row" : "")}
+            <div className={"row margin-tb"
+            + (selected ? " selected-row" : "")
+            + (connected ? " bold-text" : "")}
             onClick={e => actions.selectSSID(ssid)}>
                 <p>{ssid}</p>
             </div>
         );
-
-        // TODO: show if connected
     }
 }

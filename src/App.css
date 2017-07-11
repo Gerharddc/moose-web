@@ -40,3 +40,7 @@
 .selected-row {
   background-color: cadetblue;
 }
+
+.bold-text {
+  font-weight: bold;
+}

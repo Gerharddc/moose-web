@@ -16,6 +16,14 @@ const wifi = (state = {ssids: []}, action) => {
             return Object.assign({}, state, {
                 connectionState: action.state
             });
+        case 'SET_HOSTING_SSID':
+            return Object.assign({}, state, {
+                hostingSSID: action.ssid
+            });
+        case 'SET_HOSTING_PWD':
+            return Object.assign({}, state, {
+                hostingPWD: action.pwd
+            });
 
         default:
             return state
