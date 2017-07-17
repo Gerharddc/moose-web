@@ -69,7 +69,7 @@ export function getHeaters() {
 	return function (dispatch) {
 		PrinterSocket.request({
 			request: 'GetHeaters',
-			data: {}
+			data: null
 		}).then(response => {
 			// Clear the heaters before setting the new ones
 			dispatch({
