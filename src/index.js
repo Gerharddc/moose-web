@@ -5,10 +5,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
+import { compose, createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
+import {persistStore, autoRehydrate} from 'redux-persist'
 import mooseReducer from './reducers';
-import DefaultState from './DefaultState';
 import { getHeaters } from './actions/heaters';
 import PrinterSocket from './PrinterSocket';
 
@@ -18,8 +18,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './bootstrap-theme.min.css';
 
 let store = createStore(mooseReducer,
-	DefaultState,
-	applyMiddleware(thunkMiddleware));
+	compose(
+		applyMiddleware(thunkMiddleware),
+		autoRehydrate()
+	));
+
+persistStore(store);
 
 ReactDOM.render(
 	<Provider store={store}>
