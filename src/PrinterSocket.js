@@ -1,8 +1,8 @@
 import * as HeaterActions from "./actions/heaters"
 import * as WifiActions from "./actions/wifi"
 
-//let socket = new WebSocket("ws://localhost:8080");
-let socket = new WebSocket("ws://10.42.0.146:8080");
+let socket = new WebSocket("ws://localhost:8080");
+//let socket = new WebSocket("ws://10.42.0.146:8080");
 let requestMap = new Map();
 let store;
 let runOnOpenFunc;
@@ -47,7 +47,7 @@ export default class PrinterSocket {
 				id = Math.random();
 			}
 
-			data['id'] = id;//.toString();
+			data['id'] = id;
 
 			requestMap.set(id, { resolve, reject });
 

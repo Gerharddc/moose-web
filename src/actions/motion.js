@@ -1,4 +1,5 @@
 // Copyright 2017 Gerhard de Clercq
+import PrinterSocket from '../PrinterSocket'
 
 export const setDistance = (distance) => {
 	return {

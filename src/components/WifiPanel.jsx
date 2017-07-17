@@ -12,7 +12,7 @@ import ToggleSwitch from '@trendmicro/react-toggle-switch';
 class WifiPanel extends Component {
 	render() {
 		const { wifi, actions } = this.props;
-		let isHosting = wifi.connectionState === 'tether';
+		let isHosting = wifi.connectionState === 'hosting';
 
 		return (
 			<div className="col col-xs-6 col-md-4">
@@ -37,9 +37,10 @@ class WifiPanel extends Component {
 								</div>
 							</Tab>
 							<Tab label="Host">
-								<ToggleSwitch checked={heater.isOn}
-															onChange={(event) =>
-																actions.setHeating(heater.id, !heater.isOn)
+								<ToggleSwitch checked={isHosting}
+															onChange={(event) => {
+																actions.setHosting(!isHosting, wifi.hostingSSID, wifi.hostingPWD);
+															}
 															}/>
 							</Tab>
 						</Tabs>

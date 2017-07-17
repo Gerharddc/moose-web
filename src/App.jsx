@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import ManualControlPanel from './components/ManualControlPanel';
 import PrintInfoPanel from './components/PrintInfoPanel';
+import WifiPanel from './components/WifiPanel';
 //import CameraPanel from './components/CameraPanel';
 import './App.css';
 
@@ -35,6 +36,7 @@ class App extends Component {
 					<div className="row">
 						<ManualControlPanel/>
 						<PrintInfoPanel/>
+						<WifiPanel/>
 					</div>
 				</div>
 

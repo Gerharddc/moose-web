@@ -110,6 +110,24 @@ export const setHostingPassphrase = (pwd) => {
     }
 };
 
+export function setHosting(hosting, ssid, passphrase) {
+    return function (dispatch) {
+        if (hosting) {
+            PrinterSocket.request({
+                request: 'SetHosting',
+                data: {
+                    hosting,
+                    ssid,
+                    passphrase
+                }
+            }).catch(msg => {
+                console.log('Error setting hosting: ' + msg);
+                getConnectionState(dispatch);
+            })
+        }
+    }
+}
+
 /*export const setWifiEnable = (enabled) => {
     return {
         type: 'SET_HOSTING_PWD',
