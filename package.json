@@ -5,9 +5,9 @@
   "dependencies": {
     "@trendmicro/react-toggle-switch": "^0.5.4",
     "bootstrap": "4.0.0-alpha.6",
+    "event-emitter-es6": "^1.1.5",
     "prop-types": "^15.5.10",
     "react": "^15.5.4",
-    "react-bootstrap-tabs": "^1.0.0",
     "react-dom": "^15.5.4",
     "react-player": "^0.18.0",
     "react-redux": "^5.0.4",

@@ -1,33 +1,24 @@
-import * as HeaterActions from "./actions/heaters"
-import * as WifiActions from "./actions/wifi"
+import * as HeaterActions from "./actions/heaters";
+import * as WifiActions from "./actions/wifi";
+import EventEmitter from "event-emitter-es6";
 
 let socket = new WebSocket("ws://localhost:8080");
 //let socket = new WebSocket("ws://10.42.0.146:8080");
 let requestMap = new Map();
 let store;
-let runOnOpenFunc;
 
-export default class PrinterSocket {
-	static get connected() {
+class PrinterSocket extends EventEmitter {
+	get connected() {
 		return (socket.readyState === 1);
 	}
 
-	static setStore(Store) {
+	setStore(Store) {
 		store = Store;
-	}
-
-	static runOnOpen(func) {
-		if (socket.readyState === 1) {
-			func();
-		}
-		else {
-			runOnOpenFunc = func;
-		}
 	}
 
 	// Send a formatted request to the server
 	// with the ability to handle a response async
-	static request(data) {
+	request(data) {
 		return new Promise((resolve, reject) => {
 			// Check if we have a connection
 			if (socket.readyState !== 1) {
@@ -56,15 +47,16 @@ export default class PrinterSocket {
 	}
 }
 
+const printerSocket = new PrinterSocket();
+export default printerSocket;
+
 socket.onerror = function (event) {
 	alert("Error connecting to printer");
 	console.log(event);
 };
 
 socket.onopen = function (event) {
-	if (runOnOpenFunc !== undefined) {
-		runOnOpenFunc();
-	}
+	printerSocket.emit("opened");
 };
 
 socket.onmessage = function (event) {
@@ -123,12 +115,6 @@ socket.onmessage = function (event) {
             return;
         }
 
-        if (!msg.hasOwnProperty('response')) {
-            alert('Invalid message from server');
-            console.log('Response lacks response field: ' + event.data);
-            return;
-        }
-
         let id = parseFloat(msg.id);
 
         if (!requestMap.has(id)) {
@@ -141,7 +127,8 @@ socket.onmessage = function (event) {
         }
         else if (msg.status === 'error') {
             // TODO: pass error
-            requestMap.get(id).reject();
+			requestMap.get(id).reject();
+			alert("Printer error: " + msg.error);
         }
         else {
             alert('Invalid message from server');

@@ -28,6 +28,10 @@ const wifi = (state = {ssids: []}, action) => {
             return Object.assign({}, state, {
                 isHosting: action.isHosting
             });
+        case 'SET_HOSTING':
+            return Object.assign({}, state, {
+                hosting: action.hosting
+            });
 
         default:
             return state

@@ -1,5 +1,5 @@
 // Copyright 2017 Gerhard de Clercq
-import PrinterSocket from '../PrinterSocket'
+import printerSocket from '../PrinterSocket'
 
 export const setDistance = (distance) => {
 	return {
@@ -24,7 +24,7 @@ export const setForward = (forward) => {
 
 export function moveAxis(distance, speed, forward, axis) {
     return function (dispatch) {
-        PrinterSocket.request({
+        printerSocket.request({
             request: 'MoveAxis',
             data: {
                 distance,

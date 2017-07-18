@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import HeaterControl from './HeaterControl';
 import * as HeaterActions from '../actions/heaters';
+import printerSocket from '../PrinterSocket';
 
 class Heaters extends Component {
 	render () {
@@ -31,6 +32,10 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
+	printerSocket.on("opened", () => {
+		dispatch(HeaterActions.getHeaters());
+	});
+
 	return {
 		actions: bindActionCreators(HeaterActions, dispatch)
 	}

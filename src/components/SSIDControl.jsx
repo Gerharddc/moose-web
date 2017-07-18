@@ -8,9 +8,9 @@ export default class SSIDControl extends Component {
 
         return (
             <div className={"row margin-tb"
-            + (selected ? " selected-row" : "")
-            + (connected ? " bold-text" : "")}
-            onClick={e => actions.selectSSID(ssid)}>
+                + (selected ? " selected-row" : "")
+                + (connected ? " bold-text" : "")}
+                onClick={e => actions.selectSSID(ssid)}>
                 <p>{ssid}</p>
             </div>
         );

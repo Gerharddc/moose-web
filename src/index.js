@@ -10,7 +10,8 @@ import thunkMiddleware from 'redux-thunk';
 import {persistStore, autoRehydrate} from 'redux-persist'
 import mooseReducer from './reducers';
 import { getHeaters } from './actions/heaters';
-import PrinterSocket from './PrinterSocket';
+import printerSocket from './PrinterSocket';
+import { getSSIDS } from './actions/wifi';
 
 import './index.css';
 import '@trendmicro/react-toggle-switch/dist/react-toggle-switch.css';
@@ -20,10 +21,10 @@ import './bootstrap-theme.min.css';
 let store = createStore(mooseReducer,
 	compose(
 		applyMiddleware(thunkMiddleware),
-		autoRehydrate()
+		//autoRehydrate()
 	));
 
-persistStore(store);
+//persistStore(store);
 
 ReactDOM.render(
 	<Provider store={store}>
@@ -32,9 +33,5 @@ ReactDOM.render(
 	document.getElementById('root')
 );
 
-PrinterSocket.runOnOpen(() => {
-	store.dispatch(getHeaters());
-});
-
-PrinterSocket.setStore(store);
+printerSocket.setStore(store);
 

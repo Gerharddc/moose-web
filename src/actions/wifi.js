@@ -1,48 +1,46 @@
-import PrinterSocket from '../PrinterSocket'
+import printerSocket from '../PrinterSocket'
 
 export function scanWifi() {
-	return function (dispatch) {
-		// TODO: notify scanning with state
+    return function (dispatch) {
+        // TODO: notify scanning with state
 
-		PrinterSocket.request({
-			request: 'ScanWifi',
-			data: null
-		}).then(resp => {
-			dispatch(getSSIDS());
-		}).catch(resp => {
-			console.log('Error scanning wifi: ' + resp);
-		})
+        printerSocket.request({
+            request: 'ScanWifi',
+            data: null
+        }).then(resp => {
+            dispatch(getSSIDS());
+        }).catch(resp => {
+            console.log('Error scanning wifi: ' + resp);
+        })
     }
 }
 
 export function getSSIDS() {
-	return function (dispatch) {
-		PrinterSocket.request({
-			request: 'GetSSIDS',
-			data: null
-		}).then(response => {
-			response.forEach(ssid => {
-				dispatch({
-					type: 'SET_SSIDS',
-					ssids: response
-				});
-			})
-		}).catch(msg => {
-			console.log('Error getting ssids: ' + msg);
-		})
-	}
+    return function (dispatch) {
+        printerSocket.request({
+            request: 'GetSSIDS',
+            data: null
+        }).then(response => {
+            dispatch({
+                type: 'SET_SSIDS',
+                ssids: response
+            });
+        }).catch(msg => {
+            console.log('Error getting ssids: ' + msg);
+        })
+    }
 }
 
 export function getConnectedSSID() {
     return function (dispatch) {
-        PrinterSocket.request({
+        printerSocket.request({
             request: 'GetConnectedSSID',
             data: null
         }).then(response => {
-        	dispatch({
-				type: 'SET_CONNECTED_SSID',
-				ssid: response
-			})
+            dispatch({
+                type: 'SET_CONNECTED_SSID',
+                ssid: response
+            })
         }).catch(msg => {
             console.log('Error getting connected ssid: ' + msg);
         })
@@ -51,7 +49,7 @@ export function getConnectedSSID() {
 
 export function getConnectionState() {
     return function (dispatch) {
-        PrinterSocket.request({
+        printerSocket.request({
             request: 'GetConnectionState',
             data: null
         }).then(response => {
@@ -66,21 +64,21 @@ export function getConnectionState() {
 }
 
 export function connectSSID(ssid) {
-	return function (dispatch) {
-		if (ssid) {
-            PrinterSocket.request({
+    return function (dispatch) {
+        if (ssid) {
+            printerSocket.request({
                 request: 'ConnectSSID',
                 data: { ssid }
             }).catch(msg => {
                 console.log('Error connecting to ssid: ' + msg);
             })
-		}
-	}
+        }
+    }
 }
 
 export function disconnectWifi() {
     return function (dispatch) {
-        PrinterSocket.request({
+        printerSocket.request({
             request: 'DisconnectWifi',
             data: null
         }).catch(msg => {
@@ -112,24 +110,40 @@ export const setHostingPassphrase = (pwd) => {
 
 export function setHosting(hosting, ssid, passphrase) {
     return function (dispatch) {
-        if (hosting) {
-            dispatch({
-                type: 'SET_IS_HOSTING',
-                isHosting: hosting
-            })
+        dispatch({
+            type: 'SET_HOSTING',
+            hosting
+        })
 
-            PrinterSocket.request({
-                request: 'SetHosting',
-                data: {
-                    hosting,
-                    ssid,
-                    passphrase
-                }
-            }).catch(msg => {
-                console.log('Error setting hosting: ' + msg);
-                getConnectionState(dispatch);
+        printerSocket.request({
+            request: 'SetHosting',
+            data: {
+                hosting,
+                ssid,
+                passphrase
+            }
+        }).catch(msg => {
+            console.log('Error setting hosting: ' + msg);
+            getConnectionState(dispatch);
+        })
+    }
+}
+
+export function getHosting() {
+    return function (dispatch) {
+        console.log('Getting hosting');
+
+        printerSocket.request({
+            request: 'GetHosting',
+            data: null
+        }).then(response => {
+            dispatch({
+                type: 'SET_HOSTING',
+                hosting: response
             })
-        }
+        }).catch(msg => {
+            console.log('Error getting hosting: ' + msg);
+        })
     }
 }
 

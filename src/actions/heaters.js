@@ -1,4 +1,4 @@
-import PrinterSocket from '../PrinterSocket'
+import printerSocket from '../PrinterSocket'
 
 const setHeatingI = (id, isOn) => {
 	return {
@@ -11,7 +11,7 @@ const setHeatingI = (id, isOn) => {
 export function getHeating(id) {
 	return function (dispatch) {
 		console.log('Getting heating');
-		PrinterSocket.request({
+		printerSocket.request({
 			request: 'GetHeating',
 			data: { id: id }
 		}).then(resp => {
@@ -26,7 +26,7 @@ export function getHeating(id) {
 
 export function setHeating(id, heating) {
 	return function (dispatch) {
-		PrinterSocket.request({
+		printerSocket.request({
 			request: 'SetHeating',
 			data: { id, heating }
 		}).catch(msg => {
@@ -47,7 +47,7 @@ export const setTargetTemp = (id, target) => {
 
 export function getHeater(id) {
 	return function (dispatch) {
-		PrinterSocket.request({
+		printerSocket.request({
 			request: 'GetHeater',
 			data: { id }
 		}).then(msg => {
@@ -67,15 +67,15 @@ export function getHeater(id) {
 
 export function getHeaters() {
 	return function (dispatch) {
-		PrinterSocket.request({
+		// Clear the heaters before setting the new ones
+		dispatch({
+			type: 'CLEAR_HEATERS'
+		});
+
+		printerSocket.request({
 			request: 'GetHeaters',
 			data: null
 		}).then(response => {
-			// Clear the heaters before setting the new ones
-			dispatch({
-				type: 'CLEAR_HEATERS'
-			});
-
 			response.forEach(id => {
 				console.log('Heater: ' + 1);
 				dispatch(getHeater(id));
