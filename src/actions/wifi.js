@@ -70,7 +70,7 @@ export function connectSSID(ssid) {
 		if (ssid) {
             PrinterSocket.request({
                 request: 'ConnectSSID',
-                data: ssid
+                data: { ssid }
             }).catch(msg => {
                 console.log('Error connecting to ssid: ' + msg);
             })
