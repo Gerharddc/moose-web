@@ -44,3 +44,7 @@
 .bold-text {
   font-weight: bold;
 }
+
+.row-top-spaced {
+  margin-top: 30px;
+}

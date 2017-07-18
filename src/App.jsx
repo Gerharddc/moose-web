@@ -36,6 +36,8 @@ class App extends Component {
 					<div className="row">
 						<ManualControlPanel/>
 						<PrintInfoPanel/>
+					</div>
+					<div className="row row-top-spaced">
 						<WifiPanel/>
 					</div>
 				</div>

@@ -113,6 +113,11 @@ export const setHostingPassphrase = (pwd) => {
 export function setHosting(hosting, ssid, passphrase) {
     return function (dispatch) {
         if (hosting) {
+            dispatch({
+                type: 'SET_IS_HOSTING',
+                isHosting: hosting
+            })
+
             PrinterSocket.request({
                 request: 'SetHosting',
                 data: {

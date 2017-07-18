@@ -86,12 +86,13 @@ socket.onmessage = function (event) {
 			console.log('Store unset for PrinterSocket');
 			return;
 		}
+		console.log(msg);
 
 		switch (msg.systemname) {
 			case 'Heater':
 				switch (msg.property) {
 					case 'TargetTemp':
-						//HeaterActions.getTargetTemp(msg.id)
+						HeaterActions.getTargetTemp(msg.id)
 						break;
 					case 'Heating':
 						console.log('Heating notify');
