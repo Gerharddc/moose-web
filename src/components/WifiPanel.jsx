@@ -25,12 +25,16 @@ class WifiPanel extends Component {
 					<h3 className="card-header">Wifi</h3>
 					<div className="card-block">
 						<h4>Available SSIDs:</h4>
-						{wifi.ssids.map(s => (
-							<SSIDControl ssid={s} actions={actions}
-								selected={s === wifi.defaultSelected}
-								connected={s === wifi.connectedSSID}
-							/>
-						))}
+						<div className="list-bg">
+							<ul className="list-group">
+								{wifi.ssids.map(s => (
+									<SSIDControl ssid={s} actions={actions}
+										selected={s === wifi.selectedSSID}
+										connected={s === wifi.connectedSSID}
+									/>
+								))}
+							</ul>
+						</div>
 						{this.NoSSIDS(wifi.ssids)}
 						<div className="btn-group" role="group" aria-label="Basic example">
 							<button type="button" className="btn btn-primary"
@@ -40,11 +44,28 @@ class WifiPanel extends Component {
 							<button type="button" className="btn btn-danger"
 								onClick={(e) => actions.disconnectWifi()}>Disconnect</button>
 						</div>
-						<br/><br/>
+						<br /><br />
 						<h4>Hosting options:</h4>
+						<div className="form-group">
+							<label className="control-label" for="ssidInput">SSID</label>
+							<input className="form-control" id="ssidInput" type="text"
+								value={wifi.hostingSSID}
+								onChange={(event) => actions.setHostingtSSID(event.target.value)}
+							/>
+						</div>
+						<div className="form-group">
+							<label className="control-label" for="pwdInput">Password</label>
+							<input className="form-control" id="pwdInput" type="password"
+								value={wifi.hostingPWD}
+								onChange={(event) => actions.setHostingtPWD(event.target.value)}
+							/>
+						</div>
+						<br />
 						<ToggleSwitch checked={wifi.hosting}
 							onChange={(event) => actions.setHosting(!wifi.hosting, wifi.hostingSSID, wifi.hostingPWD)} />
 						{wifi.hosting ? "Hosting" : "Not hosting"}
+						<button type="button" className="btn btn-primary"
+								onClick={(e) => actions.scanWifi()}>Update</button>
 					</div>
 				</div>
 			</div>
@@ -67,6 +88,7 @@ function mapDispatchToProps(dispatch) {
 	printerSocket.on("opened", () => {
 		dispatch(WifiActions.getHosting());
 		dispatch(WifiActions.getSSIDS());
+		dispatch(WifiActions.getConnectedSSID());
 	});
 
 	return {
