@@ -105,6 +105,15 @@ socket.onmessage = function (event) {
 					case 'ConnectedSSID':
 						store.dispatch(WifiActions.getConnectedSSID());
 						break;
+					case 'Hosting':
+						store.dispatch(WifiActions.getHosting());
+						break;
+					case 'HostingSSID':
+						store.dispatch(WifiActions.getHostingSSID());
+						break;
+					case 'HostingPWD':
+						store.dispatch(WifiActions.getHostingPassphrase());
+						break;
 				}
 				break;
 			default:

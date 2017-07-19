@@ -60,12 +60,23 @@ class WifiPanel extends Component {
 								onChange={(event) => actions.setHostingtPWD(event.target.value)}
 							/>
 						</div>
-						<br />
-						<ToggleSwitch checked={wifi.hosting}
-							onChange={(event) => actions.setHosting(!wifi.hosting, wifi.hostingSSID, wifi.hostingPWD)} />
-						{wifi.hosting ? "Hosting" : "Not hosting"}
-						<button type="button" className="btn btn-primary"
-								onClick={(e) => actions.scanWifi()}>Update</button>
+						<div className="row vertcenter">
+							<div className="col-4">
+								<button type="button" className="btn btn-primary" disabled={!wifi.hosting}
+									onClick={(e) => actions.startHosting(wifi.hostingSSID, wifi.hostingPWD)}>Update</button>
+							</div>
+							<div className="col">
+								<ToggleSwitch checked={wifi.hosting}
+									onChange={(event) => {
+										if (wifi.hosting) {
+											actions.stopHosting();
+										} else {
+											actions.startHosting(wifi.hostingSSID, wifi.hostingPWD);
+										}
+									}} />
+								{wifi.hosting ? "Hosting" : "Not hosting"}
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -89,6 +100,8 @@ function mapDispatchToProps(dispatch) {
 		dispatch(WifiActions.getHosting());
 		dispatch(WifiActions.getSSIDS());
 		dispatch(WifiActions.getConnectedSSID());
+		dispatch(WifiActions.getHostingSSID());
+		dispatch(WifiActions.getHostingPassphrase());
 	});
 
 	return {

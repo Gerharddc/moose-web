@@ -94,12 +94,25 @@ export const selectSSID = (ssid) => {
     }
 };
 
-export const setHostingtSSID = (ssid) => {
+export const setHostingSSID = (ssid) => {
     return {
         type: 'SET_HOSTING_SSID',
         ssid
     }
 };
+
+export function getHostingSSID() {
+    return function (dispatch) {
+        printerSocket.request({
+            request: 'GetHostingSSID',
+            data: null
+        }).then(response => {
+            dispatch(setHostingSSID(response));
+        }).catch(msg => {
+            console.log('Error getting hostingssid: ' + msg);
+        })
+    }
+}
 
 export const setHostingPassphrase = (pwd) => {
     return {
@@ -108,20 +121,56 @@ export const setHostingPassphrase = (pwd) => {
     }
 };
 
-export function setHosting(hosting, ssid, passphrase) {
+export function getHostingPassphrase() {
+    return function (dispatch) {
+        printerSocket.request({
+            request: 'GetHostingPWD',
+            data: null
+        }).then(response => {
+            dispatch(setHostingPassphrase(response));
+        }).catch(msg => {
+            console.log('Error getting hostingpwd: ' + msg);
+        })
+    }
+}
+
+export const setHosting = (hosting) => {
+    return {
+        type: 'SET_HOSTING',
+        hosting
+    }
+}
+
+export function startHosting(ssid, pwd) {
     return function (dispatch) {
         dispatch({
             type: 'SET_HOSTING',
-            hosting
+            hosting: true
         })
 
         printerSocket.request({
-            request: 'SetHosting',
+            request: 'StartHosting',
             data: {
-                hosting,
                 ssid,
-                passphrase
+                pwd
             }
+        }).catch(msg => {
+            console.log('Error setting hosting: ' + msg);
+            getConnectionState(dispatch);
+        })
+    }
+}
+
+export function stopHosting() {
+    return function (dispatch) {
+        dispatch({
+            type: 'SET_HOSTING',
+            hosting: false
+        })
+
+        printerSocket.request({
+            request: 'StopHosting',
+            data: null
         }).catch(msg => {
             console.log('Error setting hosting: ' + msg);
             getConnectionState(dispatch);
