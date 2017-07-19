@@ -8,6 +8,7 @@
     "event-emitter-es6": "^1.1.5",
     "prop-types": "^15.5.10",
     "react": "^15.5.4",
+    "react-bootstrap4-modal": "^1.1.0",
     "react-dom": "^15.5.4",
     "react-player": "^0.18.0",
     "react-redux": "^5.0.4",

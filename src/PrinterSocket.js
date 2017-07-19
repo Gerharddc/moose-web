@@ -99,11 +99,8 @@ socket.onmessage = function (event) {
 					case 'ConnectedSSID':
 						store.dispatch(WifiActions.getConnectedSSID());
 						break;
-					case 'ConnectionState':
-						store.dispatch(WifiActions.getConnectionState());
-						break;
-					case 'ConnectedSSID':
-						store.dispatch(WifiActions.getConnectedSSID());
+					case 'Connected':
+						store.dispatch(WifiActions.getConnected());
 						break;
 					case 'Hosting':
 						store.dispatch(WifiActions.getHosting());

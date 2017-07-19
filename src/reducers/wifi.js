@@ -12,10 +12,6 @@ const wifi = (state = {ssids: []}, action) => {
             return Object.assign({}, state, {
                 connectedSSID: action.ssid
             });
-        case 'SET_CONNECTION_STATE':
-            return Object.assign({}, state, {
-                connectionState: action.state
-            });
         case 'SET_HOSTING_SSID':
             return Object.assign({}, state, {
                 hostingSSID: action.ssid
@@ -31,6 +27,14 @@ const wifi = (state = {ssids: []}, action) => {
         case 'SET_HOSTING':
             return Object.assign({}, state, {
                 hosting: action.hosting
+            });
+        case 'SET_CONNECTED':
+            return Object.assign({}, state, {
+                connected: action.connected
+            });
+        case 'SET_ASK_PASSWORD':
+            return Object.assign({}, state, {
+                askPassword: action.askPassword
             });
 
         default:

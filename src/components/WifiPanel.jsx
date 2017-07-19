@@ -8,6 +8,7 @@ import SSIDControl from './SSIDControl';
 import * as WifiActions from '../actions/wifi';
 import ToggleSwitch from '@trendmicro/react-toggle-switch';
 import printerSocket from '../PrinterSocket';
+import WifiPasswordDialog from './WifiPasswordDialog';
 
 class WifiPanel extends Component {
 	NoSSIDS(ssids) {
@@ -21,6 +22,7 @@ class WifiPanel extends Component {
 
 		return (
 			<div className="col col-xs-6 col-md-4">
+				<WifiPasswordDialog wifi={wifi} actions={actions}/>
 				<div className="card">
 					<h3 className="card-header">Wifi</h3>
 					<div className="card-block">
@@ -28,20 +30,24 @@ class WifiPanel extends Component {
 						<div className="list-bg">
 							<ul className="list-group">
 								{wifi.ssids.map(s => (
-									<SSIDControl ssid={s} actions={actions}
-										selected={s === wifi.selectedSSID}
-										connected={s === wifi.connectedSSID}
+									<SSIDControl ssid={s.Name} actions={actions}
+										selected={s.Name === wifi.selectedSSID}
+										connected={s.Name === wifi.connectedSSID}
+										secured={s.Secured}
 									/>
 								))}
 							</ul>
 						</div>
 						{this.NoSSIDS(wifi.ssids)}
-						<div className="btn-group" role="group" aria-label="Basic example">
+						<div className="btn-group">
 							<button type="button" className="btn btn-primary"
+								disabled={wifi.hosting}
 								onClick={(e) => actions.scanWifi()}>Scan</button>
 							<button type="button" className="btn btn-success"
-								onClick={(e) => actions.connectSSID(wifi.selectedSSID)}>Connect</button>
+								disabled={wifi.hosting}
+								onClick={(e) => actions.setAskPassword(true)}>Connect</button>
 							<button type="button" className="btn btn-danger"
+								disabled={wifi.hosting || !wifi.connected}
 								onClick={(e) => actions.disconnectWifi()}>Disconnect</button>
 						</div>
 						<br /><br />
@@ -102,6 +108,7 @@ function mapDispatchToProps(dispatch) {
 		dispatch(WifiActions.getConnectedSSID());
 		dispatch(WifiActions.getHostingSSID());
 		dispatch(WifiActions.getHostingPassphrase());
+		dispatch(WifiActions.getConnected());
 	});
 
 	return {

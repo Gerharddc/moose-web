@@ -47,28 +47,12 @@ export function getConnectedSSID() {
     }
 }
 
-export function getConnectionState() {
-    return function (dispatch) {
-        printerSocket.request({
-            request: 'GetConnectionState',
-            data: null
-        }).then(response => {
-            dispatch({
-                type: 'SET_CONNECTION_STATE',
-                state: response
-            })
-        }).catch(msg => {
-            console.log('Error getting connection state: ' + msg);
-        })
-    }
-}
-
-export function connectSSID(ssid) {
+export function connectSSID(ssid, pwd) {
     return function (dispatch) {
         if (ssid) {
             printerSocket.request({
                 request: 'ConnectSSID',
-                data: { ssid }
+                data: { ssid, pwd }
             }).catch(msg => {
                 console.log('Error connecting to ssid: ' + msg);
             })
@@ -83,6 +67,26 @@ export function disconnectWifi() {
             data: null
         }).catch(msg => {
             console.log('Error disconnecting from wifi: ' + msg);
+        })
+    }
+}
+
+export const setConnected = (connected) => {
+    return {
+        type: 'SET_CONNECTED',
+        connected
+    }
+};
+
+export function getConnected() {
+    return function (dispatch) {
+        printerSocket.request({
+            request: 'GetConnected',
+            data: null
+        }).then(response => {
+            dispatch(setConnected(response));
+        }).catch(msg => {
+            console.log('Error getting connected: ' + msg);
         })
     }
 }
@@ -156,7 +160,7 @@ export function startHosting(ssid, pwd) {
             }
         }).catch(msg => {
             console.log('Error setting hosting: ' + msg);
-            getConnectionState(dispatch);
+            getHosting(dispatch);
         })
     }
 }
@@ -173,7 +177,7 @@ export function stopHosting() {
             data: null
         }).catch(msg => {
             console.log('Error setting hosting: ' + msg);
-            getConnectionState(dispatch);
+            getHosting(dispatch);
         })
     }
 }
@@ -195,6 +199,13 @@ export function getHosting() {
         })
     }
 }
+
+export const setAskPassword = (askPassword) => {
+    return {
+        type: 'SET_ASK_PASSWORD',
+        askPassword
+    }
+};
 
 /*export const setWifiEnable = (enabled) => {
     return {
