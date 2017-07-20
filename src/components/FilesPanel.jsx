@@ -6,29 +6,31 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as FileActions from '../actions/files';
 import printerSocket from '../PrinterSocket';
-import ProgressBar from './ProgressBar'
+import FileControl from './FileControl'
 
-class PrintInfoPanel extends Component {
+class FilesPanel extends Component {
+  NoFiles(files) {
+		if (files.length < 1) {
+			return (<p>There are currently no files on the device</p>)
+		}
+	}
+
 	render() {
 		const { files, actions } = this.props;
 
 		return (
 			<div className="col col-xs-6 col-md-4">
 				<div className="card">
-					<h3 className="card-header">Print info</h3>
+					<h3 className="card-header">Files</h3>
 					<div className="card-block">
-						<p className="card-text"><b>Status: </b>
-							{files.printing ? "Printing" : "Waiting"}
-						</p>
-						<p className="card-text"><b>ETA: </b>{files.eta}</p>
-						<p>
-							<ProgressBar percent={files.progress}/>
-						</p>
-						<div className="btn-group" role="group" aria-label="Basic example">
-							<button type="button" className="btn btn-success">Start</button>
-							<button type="button" className="btn btn-danger">Stop</button>
-							<button type="button" className="btn btn-primary">Pause</button>
+            <div className="list-bg">
+							<ul className="list-group">
+								{files.files.map(f => (
+									<FileControl file={f} actions={actions} files={files}/>
+								))}
+							</ul>
 						</div>
+            {this.NoFiles(files.files)}
 					</div>
 				</div>
 			</div>
@@ -36,7 +38,7 @@ class PrintInfoPanel extends Component {
 	}
 }
 
-PrintInfoPanel.propTypes = {
+FilesPanel.propTypes = {
 	files: PropTypes.object.isRequired,
 	actions: PropTypes.object.isRequired
 };
@@ -49,10 +51,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   printerSocket.on("opened", () => {
-		dispatch(FileActions.getETA());
-		dispatch(FileActions.getPaused());
-		dispatch(FileActions.getPrinting());
-		dispatch(FileActions.getProgress());
+		dispatch(FileActions.getFiles());
 	});
 
 	return {
@@ -63,4 +62,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
 	mapStateToProps,
 	mapDispatchToProps
-)(PrintInfoPanel)
+)(FilesPanel)

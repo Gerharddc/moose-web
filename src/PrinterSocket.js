@@ -1,9 +1,10 @@
 import * as HeaterActions from "./actions/heaters";
 import * as WifiActions from "./actions/wifi";
+import * as FileActions from "./actions/files";
 import EventEmitter from "event-emitter-es6";
 
-//let socket = new WebSocket("ws://localhost:8080");
-let socket = new WebSocket("ws://10.42.0.146:8080");
+let socket = new WebSocket("ws://localhost:8080");
+//let socket = new WebSocket("ws://10.42.0.146:8080");
 //let socket = new WebSocket("ws://10.42.0.56:8080");
 let requestMap = new Map();
 let store;
@@ -117,6 +118,15 @@ socket.onmessage = function (event) {
 						break;
 				}
 				break;
+			case 'Printer':
+				switch (msg.property) {
+					case 'Printing':
+						store.dispatch(FileActions.getPrinting());
+						break;
+					case 'Paused':
+						store.dispatch(FileActions.getPaused());
+						break;
+				}
 			default:
 				console.log('Unknown subsystem: ' + event.data);
 		}

@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import ManualControlPanel from './components/ManualControlPanel';
 import PrintInfoPanel from './components/PrintInfoPanel';
 import WifiPanel from './components/WifiPanel';
+import FilesPanel from './components/FilesPanel';
 //import CameraPanel from './components/CameraPanel';
 import './App.css';
 
@@ -35,10 +36,11 @@ class App extends Component {
 				<div className="container maingrid">
 					<div className="row">
 						<ManualControlPanel/>
-						<PrintInfoPanel/>
+						<WifiPanel/>
 					</div>
 					<div className="row row-top-spaced">
-						<WifiPanel/>
+						<FilesPanel/>
+						<PrintInfoPanel/>
 					</div>
 				</div>
 
