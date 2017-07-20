@@ -9,8 +9,18 @@ import * as WifiActions from '../actions/wifi';
 import ToggleSwitch from '@trendmicro/react-toggle-switch';
 import printerSocket from '../PrinterSocket';
 import WifiPasswordDialog from './WifiPasswordDialog';
+import PasswordBox from './PasswordBox';
 
 class WifiPanel extends Component {
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			showPass: false,
+			password: ""
+		}
+	}
+
 	NoSSIDS(ssids) {
 		if (ssids.length < 1) {
 			return (<p>No networks</p>)
@@ -22,7 +32,7 @@ class WifiPanel extends Component {
 
 		return (
 			<div className="col col-xs-6 col-md-4">
-				<WifiPasswordDialog wifi={wifi} actions={actions}/>
+				<WifiPasswordDialog wifi={wifi} actions={actions} />
 				<div className="card">
 					<h3 className="card-header">Wifi</h3>
 					<div className="card-block">
@@ -30,10 +40,7 @@ class WifiPanel extends Component {
 						<div className="list-bg">
 							<ul className="list-group">
 								{wifi.ssids.map(s => (
-									<SSIDControl ssid={s.Name} actions={actions}
-										selected={s.Name === wifi.selectedSSID}
-										connected={s.Name === wifi.connectedSSID}
-										secured={s.Secured}
+									<SSIDControl ssid={s} actions={actions} wifi={wifi}
 									/>
 								))}
 							</ul>
@@ -41,13 +48,18 @@ class WifiPanel extends Component {
 						{this.NoSSIDS(wifi.ssids)}
 						<div className="btn-group">
 							<button type="button" className="btn btn-primary"
-								disabled={wifi.hosting}
 								onClick={(e) => actions.scanWifi()}>Scan</button>
 							<button type="button" className="btn btn-success"
-								disabled={wifi.hosting}
-								onClick={(e) => actions.setAskPassword(true)}>Connect</button>
+								disabled={!(wifi.selectedSSID)}
+								onClick={(e) => {
+									if (wifi.selectedSSID.Secured) {
+										actions.setAskPassword(true)
+									} else {
+										actions.connectSSID(wifi.selectedSSID, "")
+									}
+								}}>Connect</button>
 							<button type="button" className="btn btn-danger"
-								disabled={wifi.hosting || !wifi.connected}
+								disabled={!wifi.connected}
 								onClick={(e) => actions.disconnectWifi()}>Disconnect</button>
 						</div>
 						<br /><br />
@@ -56,15 +68,13 @@ class WifiPanel extends Component {
 							<label className="control-label" for="ssidInput">SSID</label>
 							<input className="form-control" id="ssidInput" type="text"
 								value={wifi.hostingSSID}
-								onChange={(event) => actions.setHostingtSSID(event.target.value)}
+								onChange={(event) => actions.setHostingSSID(event.target.value)}
 							/>
 						</div>
 						<div className="form-group">
-							<label className="control-label" for="pwdInput">Password</label>
-							<input className="form-control" id="pwdInput" type="password"
-								value={wifi.hostingPWD}
-								onChange={(event) => actions.setHostingtPWD(event.target.value)}
-							/>
+							<label className="control-label" for="ding">Password</label>
+							<PasswordBox value={wifi.hostingPWD}
+								onChange={(pwd) => actions.setHostingPassphrase(pwd)} />
 						</div>
 						<div className="row vertcenter">
 							<div className="col-4">

@@ -2,8 +2,9 @@ import * as HeaterActions from "./actions/heaters";
 import * as WifiActions from "./actions/wifi";
 import EventEmitter from "event-emitter-es6";
 
-let socket = new WebSocket("ws://localhost:8080");
-//let socket = new WebSocket("ws://10.42.0.146:8080");
+//let socket = new WebSocket("ws://localhost:8080");
+let socket = new WebSocket("ws://10.42.0.146:8080");
+//let socket = new WebSocket("ws://10.42.0.56:8080");
 let requestMap = new Map();
 let store;
 
@@ -110,6 +111,9 @@ socket.onmessage = function (event) {
 						break;
 					case 'HostingPWD':
 						store.dispatch(WifiActions.getHostingPassphrase());
+						break;
+					case 'SSIDS':
+						store.dispatch(WifiActions.getSSIDS());
 						break;
 				}
 				break;

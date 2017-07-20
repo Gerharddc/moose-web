@@ -1,13 +1,13 @@
 import React from 'react';
 import Modal from 'react-bootstrap4-modal';
+import PasswordBox from './PasswordBox';
 
 export default class WifiPasswordDialog extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      password: "",
-      showPass: false
+      password: ""
     }
   }
 
@@ -21,19 +21,8 @@ export default class WifiPasswordDialog extends React.Component {
         </div>
         <div className="modal-body">
           <p>Please provide the password needed for this network:</p>
-          <div className="input-group">
-            <input className="form-control" placeholder="Password"
-              type={this.state.showPass ? "text" : "password"}
-              value={this.state.password}
-              onChange={(event) => this.setState({ password: event.target.value })} />
-            <span className="input-group-btn">
-              <button className="btn btn-secondary" type="button"
-                onClick={(e) => this.setState({ showPass: !this.state.showPass })}>
-                {this.state.showPass ? "hide" : "show"}
-              </button>
-            </span>
-          </div>
-          <span><i className="glyphicon glyphicon-eye-open"></i></span>
+          <PasswordBox value={this.state.password}
+            onChange={(pwd) => this.setState({ password: pwd })} />
         </div>
         <div className="modal-footer">
           <button type="button" className="btn btn-secondary"
