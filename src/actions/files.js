@@ -20,6 +20,17 @@ export function getFiles() {
 	}
 }
 
+export function deleteFile(file) {
+	return function (dispatch) {
+		printerSocket.request({
+			request: 'DeleteFile',
+			data: { path: file }
+		}).catch(resp => {
+			console.log('Error deleting file: ' + resp);
+		});
+	}
+}
+
 const setPrinting = (printing) => {
 	return {
 		type: 'SET_PRINTING',
