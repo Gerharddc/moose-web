@@ -131,33 +131,34 @@ socket.onmessage = function (event) {
 				console.log('Unknown subsystem: ' + event.data);
 		}
 	}
-	else {
+	else if (msg.status === 'error') {
+		let id = msg.id;
+
+        if (requestMap.has(id)) {
+			requestMap.get(id).reject(msg.error);
+			requestMap.delete(msg.id);
+		}
+		
+		alert('Error: ' + msg.error)
+	}
+	else if (msg.status === 'success') {
         if (!msg.hasOwnProperty('id')) {
             alert('Invalid message from server');
             console.log('Response lacks id: ' + event.data);
             return;
         }
 
-        let id = parseFloat(msg.id);
+        let id = msg.id;
 
         if (!requestMap.has(id)) {
             console.log('Unkown request id: ' + id);
             return;
-        }
-
-        if (msg.status === 'success') {
-            requestMap.get(id).resolve(msg.response);
-        }
-        else if (msg.status === 'error') {
-            // TODO: pass error
-			requestMap.get(id).reject();
-			alert("Printer error: " + msg.error);
-        }
-        else {
-            alert('Invalid message from server');
-            console.log('Unknown status: ' + event.data);
-        }
-
-        requestMap.delete(msg.id)
+		}
+		
+		requestMap.get(id).resolve(msg.response);
+        requestMap.delete(msg.id);
+	} else {
+		alert('Invalid message from server');
+        console.log('Unknown status: ' + event.data);
 	}
 };
