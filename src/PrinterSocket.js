@@ -54,7 +54,7 @@ const printerSocket = new PrinterSocket();
 export default printerSocket;
 
 socket.onerror = function (event) {
-	alert("Error connecting to printer");
+	Notify('Error', "Error connecting to printer");
 	console.log(event);
 };
 
@@ -69,7 +69,7 @@ socket.onmessage = function (event) {
 
 	// Only process properly formatted responses
 	if (!msg.hasOwnProperty('status')) {
-		alert('Invalid message from server');
+		Notify('Error', 'Invalid message from server');
 		console.log('Response lacks status: ' + event.data);
 		return;
 	}
@@ -128,6 +128,7 @@ socket.onmessage = function (event) {
 						store.dispatch(FileActions.getPaused());
 						break;
 				}
+				break;
 			default:
 				console.log('Unknown subsystem: ' + event.data);
 		}
@@ -159,7 +160,7 @@ socket.onmessage = function (event) {
 		requestMap.get(id).resolve(msg.response);
         requestMap.delete(msg.id);
 	} else {
-		alert('Invalid message from server');
+		Notify('Error', 'Invalid message from server');
         console.log('Unknown status: ' + event.data);
 	}
 };

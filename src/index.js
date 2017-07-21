@@ -9,9 +9,7 @@ import { compose, createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import {persistStore, autoRehydrate} from 'redux-persist'
 import mooseReducer from './reducers';
-import { getHeaters } from './actions/heaters';
 import printerSocket from './PrinterSocket';
-import { getSSIDS } from './actions/wifi';
 
 import './index.css';
 import '@trendmicro/react-toggle-switch/dist/react-toggle-switch.css';

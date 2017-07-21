@@ -21,17 +21,19 @@ class PrintInfoPanel extends Component {
 						{files.printing ? "Printing" : "Waiting"}
 					</p>
 					<p className="card-text"><b>ETA: </b>{files.eta}</p>
-					<p>
-						<ProgressBar percent={files.progress} />
-					</p>
+					<ProgressBar percent={files.progress} />
+					<br/>
 					<div className="btn-group" role="group" aria-label="Basic example">
 						<button type="button" className="btn btn-success"
 							onClick={(e) => pactions.printFile(files.selectedFile)}
-							disabled={(files.selectedFile)}>Start</button>
+							disabled={!(files.selectedFile)}>Start</button>
 						<button type="button" className="btn btn-danger"
 							onClick={(e) => pactions.stopPrint()}
-							disabled={false}>Stop</button>
-						<button type="button" className="btn btn-primary">Pause</button>
+							disabled={!files.printing}>Stop</button>
+						<button type="button" className="btn btn-primary"
+							disabled={!files.printing}>
+							{files.paused ? "Resume" : "Pause"}
+						</button>
 					</div>
 				</div>
 			</div>

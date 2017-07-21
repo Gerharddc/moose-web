@@ -25,7 +25,7 @@ class FilesPanel extends Component {
 					<div className="list-bg">
 						<ul className="list-group">
 							{files.files.map(f => (
-								<FileControl file={f} actions={actions} files={files} />
+								<FileControl key={f} file={f} actions={actions} files={files} />
 							))}
 						</ul>
 					</div>

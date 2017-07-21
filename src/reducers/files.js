@@ -11,6 +11,10 @@ const files = (state = { files: [] }, action) => {
     case 'SET_PRINTING':
 			return Object.assign({}, state, {
 				printing: action.printing
+			});
+		case 'SET_PAUSED':
+			return Object.assign({}, state, {
+				printing: action.paused
       });
     case 'SET_PROGRESS':
 			return Object.assign({}, state, {

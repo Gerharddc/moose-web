@@ -13,7 +13,7 @@ class Heaters extends Component {
 		return (
 			<div>
 				{heaters.map(h => (
-					<HeaterControl heater={h} actions={actions}/>
+					<HeaterControl key={h.id} heater={h} actions={actions}/>
 				))}
 			</div>
 		)

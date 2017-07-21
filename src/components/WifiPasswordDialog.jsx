@@ -15,7 +15,7 @@ export default class WifiPasswordDialog extends React.Component {
     const { wifi, actions } = this.props;
 
     return (
-      <Modal visible={wifi.askPassword}>
+      <Modal visible={wifi.askPassword || false}>
         <div className="modal-header">
           <h5 className="modal-title">Wifi password</h5>
         </div>

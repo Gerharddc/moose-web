@@ -39,7 +39,7 @@ class WifiPanel extends Component {
 					<div className="list-bg">
 						<ul className="list-group">
 							{wifi.ssids.map(s => (
-								<SSIDControl ssid={s} actions={actions} wifi={wifi}
+								<SSIDControl key={s.Name} ssid={s} actions={actions} wifi={wifi}
 								/>
 							))}
 						</ul>
@@ -58,20 +58,20 @@ class WifiPanel extends Component {
 								}
 							}}>Connect</button>
 						<button type="button" className="btn btn-danger"
-							disabled={!wifi.connected}
+							disabled={!(wifi.connected)}
 							onClick={(e) => actions.disconnectWifi()}>Disconnect</button>
 					</div>
 					<br /><br />
 					<h4>Hosting options:</h4>
 					<div className="form-group">
-						<label className="control-label" for="ssidInput">SSID</label>
-						<input className="form-control" id="ssidInput" type="text"
+						<label className="control-label">SSID</label>
+						<input className="form-control" type="text"
 							value={wifi.hostingSSID}
 							onChange={(event) => actions.setHostingSSID(event.target.value)}
 						/>
 					</div>
 					<div className="form-group">
-						<label className="control-label" for="ding">Password</label>
+						<label className="control-label">Password</label>
 						<PasswordBox value={wifi.hostingPWD}
 							onChange={(pwd) => actions.setHostingPassphrase(pwd)} />
 					</div>
