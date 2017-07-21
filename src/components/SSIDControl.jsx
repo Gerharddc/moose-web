@@ -7,7 +7,10 @@ export default class SSIDControl extends Component {
         const { ssid, actions, wifi } = this.props;
 
         const selected = (ssid === wifi.selectedSSID);
-        const connected = (ssid === wifi.connectedSSID);
+        let connected = false;
+        if (wifi.connectedSSID) {
+            connected = ssid.Name === wifi.connectedSSID.Name;
+        }
 
         return (
             <li className={"list-group-item"

@@ -29,6 +29,10 @@ class WifiPanel extends Component {
 
 	render() {
 		const { wifi, actions } = this.props;
+		let connectedSelected = false;
+		if (wifi.selectedSSID && wifi.connectedSSID) {
+			connectedSelected = (wifi.selectedSSID.Name === wifi.connectedSSID.Name);
+		}
 
 		return (
 			<div className="card">
@@ -49,7 +53,7 @@ class WifiPanel extends Component {
 						<button type="button" className="btn btn-primary"
 							onClick={(e) => actions.scanWifi()}>Scan</button>
 						<button type="button" className="btn btn-success"
-							disabled={!(wifi.selectedSSID)}
+							disabled={!(wifi.selectedSSID) || connectedSelected}
 							onClick={(e) => {
 								if (wifi.selectedSSID.Secured) {
 									actions.setAskPassword(true)
@@ -58,7 +62,7 @@ class WifiPanel extends Component {
 								}
 							}}>Connect</button>
 						<button type="button" className="btn btn-danger"
-							disabled={!(wifi.connected)}
+							disabled={!(wifi.connected) || !connectedSelected}
 							onClick={(e) => actions.disconnectWifi()}>Disconnect</button>
 					</div>
 					<br /><br />
