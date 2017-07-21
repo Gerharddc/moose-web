@@ -38,7 +38,7 @@ class WifiPanel extends Component {
 			<div className="card">
 				<WifiPasswordDialog wifi={wifi} actions={actions} />
 				<h3 className="card-header">Wifi</h3>
-				<div className="card-block">
+				<div className="card-block" onClick={e => actions.selectSSID(null)}>
 					<h4>Available SSIDs:</h4>
 					<div className="list-bg">
 						<ul className="list-group">
@@ -60,10 +60,14 @@ class WifiPanel extends Component {
 								} else {
 									actions.connectSSID(wifi.selectedSSID, "")
 								}
+								e.stopPropagation();
 							}}>Connect</button>
 						<button type="button" className="btn btn-danger"
 							disabled={!(wifi.connected) || !connectedSelected}
-							onClick={(e) => actions.disconnectWifi()}>Disconnect</button>
+							onClick={(e) => {
+								actions.disconnectWifi();
+								e.stopPropagation();
+							}}>Disconnect</button>
 					</div>
 					<br /><br />
 					<h4>Hosting options:</h4>

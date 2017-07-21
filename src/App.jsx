@@ -52,9 +52,9 @@ class App extends Component {
 					<div className="card-columns">
 						<ManualControlPanel />
 						<Heaters />
-						<WifiPanel />
 						<FilesPanel />
 						<PrintInfoPanel />
+						<WifiPanel />
 					</div>
 				</div>
 

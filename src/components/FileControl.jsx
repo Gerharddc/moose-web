@@ -10,7 +10,10 @@ export default class FileControl extends Component {
         return (
             <li className={"list-group-item"
                 + (selected ? " active" : "")}
-                onClick={e => actions.selectFile(file)}>
+                onClick={e => {
+                    actions.selectFile(file);
+                    e.stopPropagation();
+                }}>
                 {file}
             </li>
         )

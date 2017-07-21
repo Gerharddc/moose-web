@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import * as FileActions from '../actions/files';
 import printerSocket from '../PrinterSocket';
 import FileControl from './FileControl'
+import { Notify } from '../notify';
 
 class FilesPanel extends Component {
 	NoFiles(files) {
@@ -21,7 +22,7 @@ class FilesPanel extends Component {
 		return (
 			<div className="card">
 				<h3 className="card-header">Files</h3>
-				<div className="card-block">
+				<div className="card-block" onClick={(e) => actions.selectFile(null)}>
 					<div className="list-bg">
 						<ul className="list-group">
 							{files.files.map(f => (
@@ -30,6 +31,48 @@ class FilesPanel extends Component {
 						</ul>
 					</div>
 					{this.NoFiles(files.files)}
+					<div className="btn-group" role="group" aria-label="Basic example">
+						<button type="button" className="btn btn-primary"
+							onClick={(e) => {
+								e.stopPropagation();
+								this.fileInput.click();
+							}}>
+							Upload
+						</button>
+						<button type="button" className="btn btn-danger"
+							onClick={(e) => {
+								actions.deleteFile(files.selectedFile);
+								e.stopPropagation();
+							}}
+							disabled={!(files.selectedFile)}>
+							Delete
+						</button>
+					</div>
+					<input type="file" className="hidden" multiple={true}
+						ref={(input) => { this.fileInput = input }}
+						onChange={(event) => {
+							const files = this.fileInput.files;
+							if (files.length > 0) {
+								const formData = new FormData();
+
+								for (const file of files) {
+									formData.append('gcodes', file, file.name);
+								}
+
+								let xhr = new XMLHttpRequest();
+								xhr.open('POST', 'http://10.42.0.146:8000/upload', true);
+								xhr.onload = () => {
+									if (xhr.status === 200) {
+										console.log('success')
+									} else {
+										Notify("Error", xhr.response)
+									}
+								}
+								xhr.send(formData);
+							} else {
+								console.log('no files')
+							}
+						}} />
 				</div>
 			</div>
 		)

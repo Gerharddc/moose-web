@@ -127,6 +127,9 @@ socket.onmessage = function (event) {
 					case 'Paused':
 						store.dispatch(FileActions.getPaused());
 						break;
+					case 'Files':
+						store.dispatch(FileActions.getFiles());
+						break;
 				}
 				break;
 			default:

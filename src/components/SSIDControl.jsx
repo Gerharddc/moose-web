@@ -16,7 +16,10 @@ export default class SSIDControl extends Component {
             <li className={"list-group-item"
                 + (selected ? " active" : "")
                 + (connected ? " bold-text" : "")}
-                onClick={e => actions.selectSSID(ssid)}>
+                onClick={e => {
+                    actions.selectSSID(ssid);
+                    e.stopPropagation();
+                }}>
                 {ssid.Name}
             </li>
         )
