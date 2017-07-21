@@ -18,7 +18,6 @@ export function getHeating(id) {
 			console.log('setting heating to: ' + resp + ' for: ' + id);
 			dispatch(setHeatingI(id, resp))
 		}).catch(resp => {
-			alert('Error communicating with printer');
 			console.log('Error getting heating: ' + resp);
 		});
 	}

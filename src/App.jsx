@@ -8,13 +8,27 @@ import FilesPanel from './components/FilesPanel';
 import Heaters from './components/Heaters';
 //import CameraPanel from './components/CameraPanel';
 import './App.css';
+import { Register } from './notify';
+import NotifyDialog from './components/NotifyDialog';
 
 import logo from './img/logo.svg';
 
 class App extends Component {
 	constructor(props) {
 		super(props)
+
 		this.state = {
+			notification: null
+		}
+
+		Register((notification) => {
+			this.setState({notification})
+		})
+	}
+
+	ShowNotification() {
+		if (this.state.notification) {
+			return (<NotifyDialog notification={this.state.notification}/>)
 		}
 	}
 
@@ -43,6 +57,8 @@ class App extends Component {
 						<PrintInfoPanel />
 					</div>
 				</div>
+
+				{this.ShowNotification()}
 
 				<footer className="footer">
 					© Gerhard de Clercq

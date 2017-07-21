@@ -2,6 +2,7 @@ import * as HeaterActions from "./actions/heaters";
 import * as WifiActions from "./actions/wifi";
 import * as FileActions from "./actions/files";
 import EventEmitter from "event-emitter-es6";
+import { Notify } from './notify';
 
 //let socket = new WebSocket("ws://localhost:8080");
 let socket = new WebSocket("ws://10.42.0.146:8080");
@@ -139,7 +140,7 @@ socket.onmessage = function (event) {
 			requestMap.delete(msg.id);
 		}
 		
-		alert('Error: ' + msg.error)
+		Notify('Error', msg.error)
 	}
 	else if (msg.status === 'success') {
         if (!msg.hasOwnProperty('id')) {
