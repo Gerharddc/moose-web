@@ -29,7 +29,7 @@ export function setHeating(id, heating) {
 			request: 'SetHeating',
 			data: { id, heating }
 		}).catch(msg => {
-			dispatch(getHeating())
+			dispatch(getHeating(id))
 		});
 
 		dispatch(setHeatingI(id, heating));
