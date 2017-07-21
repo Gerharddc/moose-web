@@ -19,13 +19,21 @@
 }
 
 .maingrid {
-  margin-bottom: 20px;
+  margin-right: 20px;
   margin-left: 20px;
 }
 
 .vertcenter {
   display: flex;
   align-items: center;
+}
+
+.vertfill {
+  height: 100%
+}
+
+.flexright {
+  margin-left: auto
 }
 
 .card-block .progress {

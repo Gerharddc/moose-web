@@ -31,67 +31,65 @@ class WifiPanel extends Component {
 		const { wifi, actions } = this.props;
 
 		return (
-			<div className="col col-xs-6 col-md-4">
+			<div className="card">
 				<WifiPasswordDialog wifi={wifi} actions={actions} />
-				<div className="card">
-					<h3 className="card-header">Wifi</h3>
-					<div className="card-block">
-						<h4>Available SSIDs:</h4>
-						<div className="list-bg">
-							<ul className="list-group">
-								{wifi.ssids.map(s => (
-									<SSIDControl ssid={s} actions={actions} wifi={wifi}
-									/>
-								))}
-							</ul>
+				<h3 className="card-header">Wifi</h3>
+				<div className="card-block">
+					<h4>Available SSIDs:</h4>
+					<div className="list-bg">
+						<ul className="list-group">
+							{wifi.ssids.map(s => (
+								<SSIDControl ssid={s} actions={actions} wifi={wifi}
+								/>
+							))}
+						</ul>
+					</div>
+					{this.NoSSIDS(wifi.ssids)}
+					<div className="btn-group">
+						<button type="button" className="btn btn-primary"
+							onClick={(e) => actions.scanWifi()}>Scan</button>
+						<button type="button" className="btn btn-success"
+							disabled={!(wifi.selectedSSID)}
+							onClick={(e) => {
+								if (wifi.selectedSSID.Secured) {
+									actions.setAskPassword(true)
+								} else {
+									actions.connectSSID(wifi.selectedSSID, "")
+								}
+							}}>Connect</button>
+						<button type="button" className="btn btn-danger"
+							disabled={!wifi.connected}
+							onClick={(e) => actions.disconnectWifi()}>Disconnect</button>
+					</div>
+					<br /><br />
+					<h4>Hosting options:</h4>
+					<div className="form-group">
+						<label className="control-label" for="ssidInput">SSID</label>
+						<input className="form-control" id="ssidInput" type="text"
+							value={wifi.hostingSSID}
+							onChange={(event) => actions.setHostingSSID(event.target.value)}
+						/>
+					</div>
+					<div className="form-group">
+						<label className="control-label" for="ding">Password</label>
+						<PasswordBox value={wifi.hostingPWD}
+							onChange={(pwd) => actions.setHostingPassphrase(pwd)} />
+					</div>
+					<div className="row vertcenter">
+						<div className="col-4">
+							<button type="button" className="btn btn-primary" disabled={!wifi.hosting}
+								onClick={(e) => actions.startHosting(wifi.hostingSSID, wifi.hostingPWD)}>Update</button>
 						</div>
-						{this.NoSSIDS(wifi.ssids)}
-						<div className="btn-group">
-							<button type="button" className="btn btn-primary"
-								onClick={(e) => actions.scanWifi()}>Scan</button>
-							<button type="button" className="btn btn-success"
-								disabled={!(wifi.selectedSSID)}
-								onClick={(e) => {
-									if (wifi.selectedSSID.Secured) {
-										actions.setAskPassword(true)
+						<div className="col">
+							<ToggleSwitch checked={wifi.hosting}
+								onChange={(event) => {
+									if (wifi.hosting) {
+										actions.stopHosting();
 									} else {
-										actions.connectSSID(wifi.selectedSSID, "")
+										actions.startHosting(wifi.hostingSSID, wifi.hostingPWD);
 									}
-								}}>Connect</button>
-							<button type="button" className="btn btn-danger"
-								disabled={!wifi.connected}
-								onClick={(e) => actions.disconnectWifi()}>Disconnect</button>
-						</div>
-						<br /><br />
-						<h4>Hosting options:</h4>
-						<div className="form-group">
-							<label className="control-label" for="ssidInput">SSID</label>
-							<input className="form-control" id="ssidInput" type="text"
-								value={wifi.hostingSSID}
-								onChange={(event) => actions.setHostingSSID(event.target.value)}
-							/>
-						</div>
-						<div className="form-group">
-							<label className="control-label" for="ding">Password</label>
-							<PasswordBox value={wifi.hostingPWD}
-								onChange={(pwd) => actions.setHostingPassphrase(pwd)} />
-						</div>
-						<div className="row vertcenter">
-							<div className="col-4">
-								<button type="button" className="btn btn-primary" disabled={!wifi.hosting}
-									onClick={(e) => actions.startHosting(wifi.hostingSSID, wifi.hostingPWD)}>Update</button>
-							</div>
-							<div className="col">
-								<ToggleSwitch checked={wifi.hosting}
-									onChange={(event) => {
-										if (wifi.hosting) {
-											actions.stopHosting();
-										} else {
-											actions.startHosting(wifi.hostingSSID, wifi.hostingPWD);
-										}
-									}} />
-								{wifi.hosting ? "Hosting" : "Not hosting"}
-							</div>
+								}} />
+							{wifi.hosting ? "Hosting" : "Not hosting"}
 						</div>
 					</div>
 				</div>

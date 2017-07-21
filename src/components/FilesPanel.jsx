@@ -9,7 +9,7 @@ import printerSocket from '../PrinterSocket';
 import FileControl from './FileControl'
 
 class FilesPanel extends Component {
-  NoFiles(files) {
+	NoFiles(files) {
 		if (files.length < 1) {
 			return (<p>There are currently no files on the device</p>)
 		}
@@ -19,19 +19,17 @@ class FilesPanel extends Component {
 		const { files, actions } = this.props;
 
 		return (
-			<div className="col col-xs-6 col-md-4">
-				<div className="card">
-					<h3 className="card-header">Files</h3>
-					<div className="card-block">
-            <div className="list-bg">
-							<ul className="list-group">
-								{files.files.map(f => (
-									<FileControl file={f} actions={actions} files={files}/>
-								))}
-							</ul>
-						</div>
-            {this.NoFiles(files.files)}
+			<div className="card">
+				<h3 className="card-header">Files</h3>
+				<div className="card-block">
+					<div className="list-bg">
+						<ul className="list-group">
+							{files.files.map(f => (
+								<FileControl file={f} actions={actions} files={files} />
+							))}
+						</ul>
 					</div>
+					{this.NoFiles(files.files)}
 				</div>
 			</div>
 		)
@@ -50,7 +48,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  printerSocket.on("opened", () => {
+	printerSocket.on("opened", () => {
 		dispatch(FileActions.getFiles());
 	});
 

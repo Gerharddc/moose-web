@@ -14,26 +14,24 @@ class PrintInfoPanel extends Component {
 		const { files, pactions, actions } = this.props;
 
 		return (
-			<div className="col col-xs-6 col-md-4">
-				<div className="card">
-					<h3 className="card-header">Print info</h3>
-					<div className="card-block">
-						<p className="card-text"><b>Status: </b>
-							{files.printing ? "Printing" : "Waiting"}
-						</p>
-						<p className="card-text"><b>ETA: </b>{files.eta}</p>
-						<p>
-							<ProgressBar percent={files.progress} />
-						</p>
-						<div className="btn-group" role="group" aria-label="Basic example">
-							<button type="button" className="btn btn-success"
-								onClick={(e) => pactions.printFile(files.selectedFile)}
-								disabled={(files.selectedFile)}>Start</button>
-							<button type="button" className="btn btn-danger"
-								onClick={(e) => pactions.stopPrint()}
-								disabled={false}>Stop</button>
-							<button type="button" className="btn btn-primary">Pause</button>
-						</div>
+			<div className="card">
+				<h3 className="card-header">Print info</h3>
+				<div className="card-block">
+					<p className="card-text"><b>Status: </b>
+						{files.printing ? "Printing" : "Waiting"}
+					</p>
+					<p className="card-text"><b>ETA: </b>{files.eta}</p>
+					<p>
+						<ProgressBar percent={files.progress} />
+					</p>
+					<div className="btn-group" role="group" aria-label="Basic example">
+						<button type="button" className="btn btn-success"
+							onClick={(e) => pactions.printFile(files.selectedFile)}
+							disabled={(files.selectedFile)}>Start</button>
+						<button type="button" className="btn btn-danger"
+							onClick={(e) => pactions.stopPrint()}
+							disabled={false}>Stop</button>
+						<button type="button" className="btn btn-primary">Pause</button>
 					</div>
 				</div>
 			</div>

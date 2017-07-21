@@ -5,6 +5,7 @@ import ManualControlPanel from './components/ManualControlPanel';
 import PrintInfoPanel from './components/PrintInfoPanel';
 import WifiPanel from './components/WifiPanel';
 import FilesPanel from './components/FilesPanel';
+import Heaters from './components/Heaters';
 //import CameraPanel from './components/CameraPanel';
 import './App.css';
 
@@ -22,7 +23,7 @@ class App extends Component {
 			<div>
 				<div className="jumbotron vcenter-text">
 					<div className="row justify-content-center">
-						<div className="col-1 hidden-sm-down"/>
+						<div className="col-1 hidden-sm-down" />
 						<div className="col col-auto">
 							<h1 className="display-3">Moose Printer</h1>
 							<p>Because bigger is better!</p>
@@ -34,13 +35,12 @@ class App extends Component {
 				</div>
 
 				<div className="container maingrid">
-					<div className="row">
-						<ManualControlPanel/>
-						<WifiPanel/>
-					</div>
-					<div className="row row-top-spaced">
-						<FilesPanel/>
-						<PrintInfoPanel/>
+					<div className="card-columns">
+						<ManualControlPanel />
+						<Heaters />
+						<WifiPanel />
+						<FilesPanel />
+						<PrintInfoPanel />
 					</div>
 				</div>
 

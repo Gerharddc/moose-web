@@ -39,6 +39,8 @@ export function getConnectedSSID() {
 				type: 'SET_CONNECTED_SSID',
 				ssid: response
 			})
+
+			//alert('connected: ' + response.Name)
 		}).catch(msg => {
 			console.log('Error getting connected ssid: ' + msg);
 		})
