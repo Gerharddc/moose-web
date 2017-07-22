@@ -55,12 +55,19 @@ class FilesPanel extends Component {
 							if (files.length > 0) {
 								const formData = new FormData();
 
-								for (const file of files) {
-									formData.append('gcodes', file, file.name);
+								let xhr = new XMLHttpRequest();
+								if (files.length > 1) {
+									for (const file of files) {
+										formData.append('gcodes', file, file.name);
+									}
+									xhr.open('POST', 'http://10.42.0.146:8000/uploads', true);
+								} else {
+									const file = this.fileInput.files[0];
+									formData.append('gcode', file, file.name);
+									xhr.open('POST', 'http://10.42.0.146:8000/upload', true);
 								}
 
-								let xhr = new XMLHttpRequest();
-								xhr.open('POST', 'http://10.42.0.146:8000/upload', true);
+								
 								xhr.onload = () => {
 									if (xhr.status === 200) {
 										console.log('success')
