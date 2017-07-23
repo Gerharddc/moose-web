@@ -8,6 +8,7 @@ import * as FileActions from '../actions/files';
 import printerSocket from '../PrinterSocket';
 import FileControl from './FileControl'
 import { Notify } from '../notify';
+import SendFile from "../SendFile";
 
 class FilesPanel extends Component {
 	NoFiles(files) {
@@ -21,7 +22,8 @@ class FilesPanel extends Component {
 
 		return (
 			<div className="card">
-				<h3 className="card-header">Files</h3>
+				<h3 className="card-header">{
+					(files.uploading ? `Uploading (${files.upprog}%)` : "Files")}</h3>
 				<div className="card-block" onClick={(e) => actions.selectFile(null)}>
 					<div className="list-bg">
 						<ul className="list-group">
@@ -36,7 +38,8 @@ class FilesPanel extends Component {
 							onClick={(e) => {
 								e.stopPropagation();
 								this.fileInput.click();
-							}}>
+							}}
+							disabled={files.uploading}>
 							Upload
 						</button>
 						<button type="button" className="btn btn-danger"
@@ -50,6 +53,7 @@ class FilesPanel extends Component {
 					</div>
 					<input type="file" className="hidden" multiple={true}
 						ref={(input) => { this.fileInput = input }}
+						accept=".gcode"
 						onChange={(event) => {
 							const files = this.fileInput.files;
 							if (files.length > 0) {
@@ -60,11 +64,11 @@ class FilesPanel extends Component {
 									for (const file of files) {
 										formData.append('gcodes', file, file.name);
 									}
-									xhr.open('POST', 'http://10.42.0.146:8000/uploads', true);
+									xhr.open('POST', 'http://10.42.0.146:3000/uploads', true);
 								} else {
 									const file = this.fileInput.files[0];
 									formData.append('gcode', file, file.name);
-									xhr.open('POST', 'http://10.42.0.146:8000/upload', true);
+									xhr.open('POST', 'http://10.42.0.146:3000/upload', true);
 								}
 
 								
@@ -74,8 +78,21 @@ class FilesPanel extends Component {
 									} else {
 										Notify("Error", xhr.response)
 									}
+
+									actions.setUploading(false);
 								}
+
+								xhr.upload.onloadend = () => {
+									actions.setUploading(false);
+								}
+
+								xhr.upload.onprogress = (e) => {
+									actions.setUpProg(Math.round(e.loaded / e.total * 100))
+								}
+
+								actions.setUploading(true);
 								xhr.send(formData);
+								//SendFile(files[0]);
 							} else {
 								console.log('no files')
 							}

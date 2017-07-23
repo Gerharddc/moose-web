@@ -24,6 +24,18 @@ const files = (state = { files: [] }, action) => {
 			return Object.assign({}, state, {
 				eta: action.eta
 			});
+		case 'SET_FILE_ETA':
+			return Object.assign({}, state, {
+				fileETA: action.fileETA
+			});
+		case 'SET_UPLOADING':
+			return Object.assign({}, state, {
+				uploading: action.uploading
+			});
+		case 'SET_UPPROG':
+			return Object.assign({}, state, {
+				upprog: action.upprog
+			});
 
 		default:
 			return state

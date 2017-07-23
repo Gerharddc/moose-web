@@ -20,9 +20,11 @@ class PrintInfoPanel extends Component {
 					<p className="card-text"><b>Status: </b>
 						{files.printing ? "Printing" : "Waiting"}
 					</p>
-					<p className="card-text"><b>ETA: </b>{files.eta}</p>
+					<p className="card-text"><b>ETA: </b>
+						{files.printing ? files.eta : files.fileETA}
+					</p>
 					<ProgressBar percent={files.progress} />
-					<br/>
+					<br />
 					<div className="btn-group" role="group" aria-label="Basic example">
 						<button type="button" className="btn btn-success"
 							onClick={(e) => pactions.printFile(files.selectedFile)}

@@ -11,7 +11,7 @@ export function getFiles() {
 	return function (dispatch) {
 		printerSocket.request({
 			request: 'GetFiles',
-			data: { }
+			data: {}
 		}).then(resp => {
 			dispatch(setFiles(resp))
 		}).catch(resp => {
@@ -42,7 +42,7 @@ export function getPrinting() {
 	return function (dispatch) {
 		printerSocket.request({
 			request: 'GetPrinting',
-			data: { }
+			data: {}
 		}).then(resp => {
 			dispatch(setPrinting(resp))
 		}).catch(resp => {
@@ -62,7 +62,7 @@ export function getPaused() {
 	return function (dispatch) {
 		printerSocket.request({
 			request: 'GetPaused',
-			data: { }
+			data: {}
 		}).then(resp => {
 			dispatch(setPaused(resp))
 		}).catch(resp => {
@@ -82,7 +82,7 @@ export function getProgress() {
 	return function (dispatch) {
 		printerSocket.request({
 			request: 'GetProgress',
-			data: { }
+			data: null
 		}).then(resp => {
 			dispatch(setProgress(resp))
 		}).catch(resp => {
@@ -102,7 +102,7 @@ export function getETA() {
 	return function (dispatch) {
 		printerSocket.request({
 			request: 'GetETA',
-			eta: { }
+			data: null
 		}).then(resp => {
 			dispatch(setETA(resp))
 		}).catch(resp => {
@@ -111,10 +111,48 @@ export function getETA() {
 	}
 }
 
-export const selectFile = (file) => {
+const setFileETA = (fileETA) => {
 	return {
-		type: 'SET_SELECTED_FILE',
-		file
+		type: 'SET_FILE_ETA',
+		fileETA
+	}
+};
+
+export function getFileETA(file) {
+	return function (dispatch) {
+		printerSocket.request({
+			request: 'GetFileETA',
+			data: { file }
+		}).then(resp => {
+			dispatch(setFileETA(resp))
+		}).catch(resp => {
+			console.log('Error getting file eta: ' + resp);
+		});
+	}
+}
+
+export function selectFile(file) {
+	return function (dispatch) {
+		dispatch({
+			type: 'SET_SELECTED_FILE',
+			file
+		})
+
+		dispatch(getFileETA(file));
+	}
+}
+
+export const setUploading = (uploading) => {
+	return {
+		type: 'SET_UPLOADING',
+		uploading
+	}
+};
+
+export const setUpProg = (upprog) => {
+	return {
+		type: 'SET_UPPROG',
+		upprog
 	}
 };
 

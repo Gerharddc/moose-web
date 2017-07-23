@@ -6,6 +6,7 @@
     "@trendmicro/react-toggle-switch": "^0.5.4",
     "bootstrap": "4.0.0-alpha.6",
     "event-emitter-es6": "^1.1.5",
+    "line-navigator": "^2.1.6",
     "prop-types": "^15.5.10",
     "react": "^15.5.4",
     "react-bootstrap4-modal": "^1.1.0",
