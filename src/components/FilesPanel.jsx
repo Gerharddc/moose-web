@@ -9,6 +9,7 @@ import printerSocket from '../PrinterSocket';
 import FileControl from './FileControl'
 import { Notify } from '../notify';
 import SendFile from "../SendFile";
+import { ServerAddr } from '../env';;
 
 class FilesPanel extends Component {
 	NoFiles(files) {
@@ -64,11 +65,11 @@ class FilesPanel extends Component {
 									for (const file of files) {
 										formData.append('gcodes', file, file.name);
 									}
-									xhr.open('POST', 'http://10.42.0.146:3000/uploads', true);
+									xhr.open('POST', "http://" + ServerAddr + ":3000/uploads", true);
 								} else {
 									const file = this.fileInput.files[0];
 									formData.append('gcode', file, file.name);
-									xhr.open('POST', 'http://10.42.0.146:3000/upload', true);
+									xhr.open('POST', "http://" + ServerAddr + ":3000/upload", true);
 								}
 
 								

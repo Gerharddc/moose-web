@@ -3,10 +3,9 @@ import * as WifiActions from "./actions/wifi";
 import * as FileActions from "./actions/files";
 import EventEmitter from "event-emitter-es6";
 import { Notify } from './notify';
+import { ServerAddr } from './env';
 
-//let socket = new WebSocket("ws://localhost:8080");
-let socket = new WebSocket("ws://10.42.0.146:8080");
-//let socket = new WebSocket("ws://10.42.0.56:8080");
+let socket = new WebSocket("ws://" + ServerAddr + ":8080")
 let requestMap = new Map();
 let store;
 

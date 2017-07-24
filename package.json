@@ -3,22 +3,23 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@trendmicro/react-toggle-switch": "^0.5.4",
+    "@trendmicro/react-toggle-switch": "^0.5.5",
     "bootstrap": "4.0.0-alpha.6",
+    "dotenv": "^4.0.0",
     "event-emitter-es6": "^1.1.5",
     "line-navigator": "^2.1.6",
     "prop-types": "^15.5.10",
-    "react": "^15.5.4",
+    "react": "^15.6.1",
     "react-bootstrap4-modal": "^1.1.0",
-    "react-dom": "^15.5.4",
-    "react-player": "^0.18.0",
-    "react-redux": "^5.0.4",
-    "redux": "^3.6.0",
-    "redux-persist": "^4.8.0",
+    "react-dom": "^15.6.1",
+    "react-player": "^0.19.1",
+    "react-redux": "^5.0.5",
+    "redux": "^3.7.2",
+    "redux-persist": "^4.8.2",
     "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
-    "react-scripts": "0.9.5"
+    "react-scripts": "^1.0.10"
   },
   "scripts": {
     "start": "react-scripts start",

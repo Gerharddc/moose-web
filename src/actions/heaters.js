@@ -10,7 +10,6 @@ const setHeatingI = (id, isOn) => {
 
 export function getHeating(id) {
 	return function (dispatch) {
-		console.log('Getting heating');
 		printerSocket.request({
 			request: 'GetHeating',
 			data: { id: id }
@@ -43,6 +42,19 @@ export const setTargetTemp = (id, target) => {
 		target
 	}
 };
+
+export function getTargetTemp(id) {
+	return function (dispatch) {
+		printerSocket.request({
+			request: 'GetTargetTemp',
+			data: { id: id }
+		}).then(resp => {
+			dispatch(setTargetTemp(id, resp))
+		}).catch(resp => {
+			console.log('Error getting targettemp: ' + resp);
+		});
+	}
+}
 
 export function getHeater(id) {
 	return function (dispatch) {
