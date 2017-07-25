@@ -6,7 +6,7 @@ import PrintInfoPanel from './components/PrintInfoPanel';
 import WifiPanel from './components/WifiPanel';
 import FilesPanel from './components/FilesPanel';
 import Heaters from './components/Heaters';
-//import CameraPanel from './components/CameraPanel';
+import CameraPanel from './components/CameraPanel';
 import './App.css';
 import { Register } from './notify';
 import NotifyDialog from './components/NotifyDialog';
@@ -48,13 +48,14 @@ class App extends Component {
 					</div>
 				</div>
 
-				<div className="container maingrid">
+				<div className="maingrid">
 					<div className="card-columns">
 						<ManualControlPanel />
 						<Heaters />
 						<FilesPanel />
 						<PrintInfoPanel />
 						<WifiPanel />
+						<CameraPanel />
 					</div>
 				</div>
 
