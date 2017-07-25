@@ -36,6 +36,14 @@ const files = (state = { files: [] }, action) => {
 			return Object.assign({}, state, {
 				upprog: action.upprog
 			});
+		case 'SET_PROCESSING':
+			return Object.assign({}, state, {
+				processing: action.processing
+			});
+		case 'SET_PROCPROG':
+			return Object.assign({}, state, {
+				procprog: action.procprog
+			});
 
 		default:
 			return state

@@ -156,4 +156,44 @@ export const setUpProg = (upprog) => {
 	}
 };
 
+const setProcessing = (processing) => {
+	return {
+		type: 'SET_PROCESSING',
+		processing
+	}
+};
+
+export function getProcessing() {
+	return function (dispatch) {
+		printerSocket.request({
+			request: 'GetProcessing',
+			data: null
+		}).then(resp => {
+			dispatch(setProcessing(resp))
+		}).catch(resp => {
+			console.log('Error getting processing: ' + resp);
+		});
+	}
+}
+
+const setProcProg = (procprog) => {
+	return {
+		type: 'SET_PROCPROG',
+		procprog
+	}
+};
+
+export function getProcProg() {
+	return function (dispatch) {
+		printerSocket.request({
+			request: 'GetProcProg',
+			data: null
+		}).then(resp => {
+			dispatch(setProcProg(resp))
+		}).catch(resp => {
+			console.log('Error getting procprog: ' + resp);
+		});
+	}
+}
+
 /* On submit request error, reload with fresh value from server */

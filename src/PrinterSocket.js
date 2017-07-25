@@ -129,6 +129,12 @@ socket.onmessage = function (event) {
 					case 'Files':
 						store.dispatch(FileActions.getFiles());
 						break;
+					case 'Processing':
+						store.dispatch(FileActions.getProcessing());
+						break;
+					case 'ProcProg':
+						store.dispatch(FileActions.getProcProg());
+						break;
 				}
 				break;
 			default:

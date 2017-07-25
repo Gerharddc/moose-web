@@ -8,7 +8,6 @@ import * as FileActions from '../actions/files';
 import printerSocket from '../PrinterSocket';
 import FileControl from './FileControl'
 import { Notify } from '../notify';
-import SendFile from "../SendFile";
 import { ServerAddr } from '../env';;
 
 class FilesPanel extends Component {
@@ -18,13 +17,22 @@ class FilesPanel extends Component {
 		}
 	}
 
+	title(files) {
+		if (files.uploading) {
+			return `Uploading (${files.upprog}%)`;
+		} else if (files.processing) {
+			return `Processing (${files.procprog}%)`;
+		} else {
+			return "Files";
+		}
+	}
+
 	render() {
 		const { files, actions } = this.props;
 
 		return (
 			<div className="card">
-				<h3 className="card-header">{
-					(files.uploading ? `Uploading (${files.upprog}%)` : "Files")}</h3>
+				<h3 className="card-header">{ this.title(files) }</h3>
 				<div className="card-block" onClick={(e) => actions.selectFile(null)}>
 					<div className="list-bg">
 						<ul className="list-group">
@@ -93,7 +101,6 @@ class FilesPanel extends Component {
 
 								actions.setUploading(true);
 								xhr.send(formData);
-								//SendFile(files[0]);
 							} else {
 								console.log('no files')
 							}
@@ -118,6 +125,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
 	printerSocket.on("opened", () => {
 		dispatch(FileActions.getFiles());
+		dispatch(FileActions.getProcessing());
+		dispatch(FileActions.getProcProg());
 	});
 
 	return {
