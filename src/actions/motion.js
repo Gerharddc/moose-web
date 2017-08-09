@@ -37,3 +37,16 @@ export function moveAxis(distance, speed, forward, axis) {
         });
     }
 }
+
+export function homeAxis(axis) {
+    return function (dispatch) {
+        printerSocket.request({
+            request: 'HomeAxis',
+            data: {
+                axis
+            }
+        }).catch(msg => {
+            console.log('Error homing axis: ' + msg);
+        });
+    }
+}

@@ -135,6 +135,12 @@ socket.onmessage = function (event) {
 					case 'ProcProg':
 						store.dispatch(FileActions.getProcProg());
 						break;
+					case 'Progress':
+						store.dispatch(FileActions.getProgress());
+						break;
+					case 'ETA':
+						store.dispatch(FileActions.getETA());
+						break;
 				}
 				break;
 			default:

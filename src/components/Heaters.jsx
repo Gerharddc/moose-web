@@ -8,12 +8,12 @@ import printerSocket from '../PrinterSocket';
 
 class Heaters extends Component {
 	render () {
-		const { heaters, actions } = this.props;
+		const { heaters, actions, files } = this.props;
 
 		return (
 			<div>
 				{heaters.map(h => (
-					<HeaterControl key={h.id} heater={h} actions={actions}/>
+					<HeaterControl key={h.id} heater={h} actions={actions} files={files}/>
 				))}
 			</div>
 		)
@@ -22,12 +22,14 @@ class Heaters extends Component {
 
 Heaters.propTypes = {
 	heaters: PropTypes.array.isRequired,
+	files: PropTypes.array.isRequired,
 	actions: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {
 	return {
-		heaters: state.heaters
+		heaters: state.heaters,
+		files: state.files
 	}
 }
 

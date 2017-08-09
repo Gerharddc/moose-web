@@ -10,7 +10,7 @@ import * as MotionActions from '../actions/motion';
 
 class ManualControlPanel extends Component {
 	render() {
-		const { motion, actions } = this.props;
+		const { motion, actions, files } = this.props;
 		const moveAxis = function (axis) {
 			actions.moveAxis(motion.distance, motion.speed, motion.forward, axis)
 		};
@@ -37,21 +37,41 @@ class ManualControlPanel extends Component {
 					<br />
 					<h5>Move</h5>
 					<div className="vertcenter">
-						<div className="btn-group">
-							<button type="button" className="btn btn-primary"
-								onClick={e => moveAxis('x')}>X</button>
-							<button type="button" className="btn"
-								onClick={e => moveAxis('y')}>Y</button>
-							<button type="button" className="btn btn-primary"
-								onClick={e => moveAxis('z')}>Z</button>
-							<button type="button" className="btn"
-								onClick={e => moveAxis('e')}>E</button>
-						</div>
-						<div className="flexright">
-							<ToggleSwitch checked={motion.forward}
-								onChange={(event) => actions.setForward(!motion.forward)} />
-							{motion.forward ? "Forward" : "Backward"}
-						</div>
+						<ToggleSwitch checked={motion.forward}
+							onChange={(event) => actions.setForward(!motion.forward)} />
+						{motion.forward ? "Forward" : "Backward"}
+					</div>
+					<br />
+					<div className="btn-group">
+						<button type="button" className="btn btn-primary"
+							disabled={files.printing}
+							onClick={e => moveAxis('x')}>X</button>
+						<button type="button" className="btn"
+							disabled={files.printing}
+							onClick={e => moveAxis('y')}>Y</button>
+						<button type="button" className="btn btn-primary"
+							disabled={files.printing}
+							onClick={e => moveAxis('z')}>Z</button>
+						<button type="button" className="btn"
+							disabled={files.printing}
+							onClick={e => moveAxis('e')}>E</button>
+					</div>
+					<br />
+					<br />
+					<h5>Home</h5>
+					<div className="btn-group">
+						<button type="button" className="btn btn-primary"
+							disabled={files.printing}
+							onClick={e => actions.homeAxis('x')}>X</button>
+						<button type="button" className="btn"
+							disabled={files.printing}
+							onClick={e => actions.homeAxis('y')}>Y</button>
+						<button type="button" className="btn btn-primary"
+							disabled={files.printing}
+							onClick={e => actions.homeAxis('z')}>Z</button>
+						<button type="button" className="btn btn"
+							disabled={files.printing}
+							onClick={e => actions.homeAxis('a')}>All</button>
 					</div>
 				</div>
 			</div>
@@ -61,12 +81,14 @@ class ManualControlPanel extends Component {
 
 ManualControlPanel.propTypes = {
 	motion: PropTypes.object.isRequired,
+	files: PropTypes.object.isRequired,
 	actions: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {
 	return {
-		motion: state.motion
+		motion: state.motion,
+		files: state.files
 	}
 }
 

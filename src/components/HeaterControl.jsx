@@ -5,7 +5,7 @@ import ToggleSwitch from '@trendmicro/react-toggle-switch';
 
 export default class HeaterControl extends Component {
 	render() {
-		const { heater, actions } = this.props;
+		const { heater, actions, files } = this.props;
 
 		return (
 			<div className="card">
@@ -16,6 +16,7 @@ export default class HeaterControl extends Component {
 						</div>
 						<div className="col col-auto vertcenter">
 							<ToggleSwitch checked={heater.isOn}
+								disabled={files.printing}
 								onChange={(event) =>
 									actions.setHeating(heater.id, !heater.isOn)
 								} />
@@ -35,6 +36,7 @@ export default class HeaterControl extends Component {
 						<div className="input-group-addon">Target</div>
 						<input type="number" className="form-control"
 							value={heater.target}
+							disabled={files.printing}
 							onChange={(event) =>
 								actions.setTargetTemp(heater.id, event.target.value)
 							} />

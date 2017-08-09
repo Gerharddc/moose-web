@@ -11,7 +11,7 @@ export function printFile(file) {
 	}
 }
 
-export function pausePrint(file) {
+export function pausePrint() {
 	return function (dispatch) {
 		printerSocket.request({
 			request: 'PausePrint',
@@ -22,7 +22,7 @@ export function pausePrint(file) {
 	}
 }
 
-export function resumePrint(file) {
+export function resumePrint() {
 	return function (dispatch) {
 		printerSocket.request({
 			request: 'ResumePrint',

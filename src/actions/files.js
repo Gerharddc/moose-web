@@ -62,7 +62,7 @@ export function getPaused() {
 	return function (dispatch) {
 		printerSocket.request({
 			request: 'GetPaused',
-			data: {}
+			data: null
 		}).then(resp => {
 			dispatch(setPaused(resp))
 		}).catch(resp => {

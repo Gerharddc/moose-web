@@ -10,6 +10,18 @@ import printerSocket from '../PrinterSocket';
 import ProgressBar from './ProgressBar'
 
 class PrintInfoPanel extends Component {
+	Status(files) {
+		if (files.printing) {
+			if (files.paused) {
+				return "Paused";
+			} else {
+				return "Printing";
+			}
+		} else {
+			return "Stopped";
+		}
+	}
+
 	render() {
 		const { files, pactions, actions } = this.props;
 
@@ -18,7 +30,7 @@ class PrintInfoPanel extends Component {
 				<h3 className="card-header">Print info</h3>
 				<div className="card-block">
 					<p className="card-text"><b>Status: </b>
-						{files.printing ? "Printing" : "Waiting"}
+						{this.Status(files)}
 					</p>
 					<p className="card-text"><b>ETA: </b>
 						{files.printing ? files.eta : files.fileETA}
@@ -28,11 +40,18 @@ class PrintInfoPanel extends Component {
 					<div className="btn-group" role="group" aria-label="Basic example">
 						<button type="button" className="btn btn-success"
 							onClick={(e) => pactions.printFile(files.selectedFile)}
-							disabled={!(files.selectedFile)}>Start</button>
+							disabled={!(files.selectedFile) || files.printing}>Start</button>
 						<button type="button" className="btn btn-danger"
 							onClick={(e) => pactions.stopPrint()}
 							disabled={!files.printing}>Stop</button>
 						<button type="button" className="btn btn-primary"
+							onClick={(e) => {
+								if (files.paused) {
+									pactions.resumePrint();
+								} else {
+									pactions.pausePrint();
+								}
+							}}
 							disabled={!files.printing}>
 							{files.paused ? "Resume" : "Pause"}
 						</button>
