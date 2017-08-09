@@ -31,7 +31,7 @@ class FilesPanel extends Component {
 		const { files, actions } = this.props;
 
 		return (
-			<div className="card">
+			<div className="card grid-item">
 				<h3 className="card-header">{ this.title(files) }</h3>
 				<div className="card-block" onClick={(e) => actions.selectFile(null)}>
 					<div className="list-bg">

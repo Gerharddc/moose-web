@@ -35,7 +35,7 @@ class WifiPanel extends Component {
 		}
 
 		return (
-			<div className="card">
+			<div className="card grid-item">
 				<WifiPasswordDialog wifi={wifi} actions={actions} />
 				<h3 className="card-header">Wifi</h3>
 				<div className="card-block" onClick={e => actions.selectSSID(null)}>

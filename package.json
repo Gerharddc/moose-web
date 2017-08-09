@@ -12,6 +12,7 @@
     "react": "^15.6.1",
     "react-bootstrap4-modal": "^1.1.0",
     "react-dom": "^15.6.1",
+    "react-masonry-component": "^5.0.7",
     "react-player": "^0.19.1",
     "react-redux": "^5.0.5",
     "redux": "^3.7.2",
@@ -22,7 +23,7 @@
     "react-scripts": "^1.0.10"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "HOST='localhost' react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"

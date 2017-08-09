@@ -4,7 +4,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import ToggleSwitch from '@trendmicro/react-toggle-switch';
-import Heaters from './Heaters';
 import { connect } from 'react-redux';
 import * as MotionActions from '../actions/motion';
 
@@ -16,7 +15,7 @@ class ManualControlPanel extends Component {
 		};
 
 		return (
-			<div className="card">
+			<div className="card grid-item">
 				<h3 className="card-header">Manual control</h3>
 				<div className="card-block">
 					<div className="input-group">

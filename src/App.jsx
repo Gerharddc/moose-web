@@ -5,13 +5,27 @@ import ManualControlPanel from './components/ManualControlPanel';
 import PrintInfoPanel from './components/PrintInfoPanel';
 import WifiPanel from './components/WifiPanel';
 import FilesPanel from './components/FilesPanel';
-import Heaters from './components/Heaters';
 import CameraPanel from './components/CameraPanel';
 import './App.css';
 import { Register } from './notify';
 import NotifyDialog from './components/NotifyDialog';
+import Masonry from 'react-masonry-component';
+
+import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as HeaterActions from './actions/heaters';
+import HeaterControl from './components/HeaterControl';
+import printerSocket from './PrinterSocket';
 
 import logo from './img/logo.svg';
+
+const masonryOptions = {
+	itemSelector: '.grid-item',
+	columnWidth: '.grid-sizer',
+	percentPosition: true,
+	gutter: 10
+};
 
 class App extends Component {
 	constructor(props) {
@@ -22,19 +36,25 @@ class App extends Component {
 		}
 
 		Register((notification) => {
-			this.setState({notification})
+			this.setState({ notification })
 		})
 	}
 
 	ShowNotification() {
 		if (this.state.notification) {
-			return (<NotifyDialog notification={this.state.notification}/>)
+			return (<NotifyDialog notification={this.state.notification} />)
 		}
+	}
+
+	Heaters(heaters, actions) {
+		return (heaters.map(h => (
+			<HeaterControl key={h.id} heater={h} actions={actions} />
+		)));
 	}
 
 	render() {
 		return (
-			<div>
+			<div className="Main">
 				<div className="jumbotron vcenter-text">
 					<div className="row justify-content-center">
 						<div className="col-1 hidden-sm-down" />
@@ -49,14 +69,15 @@ class App extends Component {
 				</div>
 
 				<div className="maingrid">
-					<div className="card-columns">
+					<Masonry options={masonryOptions}>
+						<div className="grid-sizer"></div>
 						<ManualControlPanel />
-						<Heaters />
 						<FilesPanel />
 						<PrintInfoPanel />
 						<WifiPanel />
+						{this.Heaters(this.props.heaters, this.props.actions)}
 						<CameraPanel />
-					</div>
+					</Masonry>
 				</div>
 
 				{this.ShowNotification()}
@@ -69,4 +90,28 @@ class App extends Component {
 	}
 }
 
-export default App;
+App.propTypes = {
+	heaters: PropTypes.array.isRequired,
+	actions: PropTypes.object.isRequired
+};
+
+function mapStateToProps(state) {
+	return {
+		heaters: state.heaters
+	}
+}
+
+function mapDispatchToProps(dispatch) {
+	printerSocket.on("opened", () => {
+		dispatch(HeaterActions.getHeaters());
+	});
+
+	return {
+		actions: bindActionCreators(HeaterActions, dispatch)
+	}
+}
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(App)
