@@ -8,7 +8,7 @@ export default class HeaterControl extends Component {
 		const { heater, actions } = this.props;
 
 		return (
-			<div className="card">
+			<div className="card grid-item">
 				<div className="card-header">
 					<div className="row">
 						<div className="col">

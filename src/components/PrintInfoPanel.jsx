@@ -14,7 +14,7 @@ class PrintInfoPanel extends Component {
 		const { files, pactions, actions } = this.props;
 
 		return (
-			<div className="card">
+			<div className="card grid-item">
 				<h3 className="card-header">Print info</h3>
 				<div className="card-block">
 					<p className="card-text"><b>Status: </b>
