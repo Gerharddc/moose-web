@@ -1,8 +1,12 @@
-import printerSocket from '../PrinterSocket'
+import printerSocket from '../PrinterSocket';
+import { Notify } from '../../notify';
 
-export function scanWifi() {
+export function scanWifi(hosting = false) {
 	return function (dispatch) {
 		// TODO: notify scanning with state
+		if (hosting) {
+			Notify('Info', 'The hosted network will stop for scanning and you will have to reconnect.');
+		}
 
 		printerSocket.request({
 			request: 'ScanWifi',
