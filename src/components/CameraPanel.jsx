@@ -9,7 +9,7 @@ export default class CameraPanel extends Component {
         <h3 className="card-header">Camera</h3>
         <div className="card-block">
           <div className="box">
-            <iframe className="full-width" src="https://www.youtube.com/embed/Ib4EX5u9hGk" frameborder="0"/>
+            <iframe className="full-width" src="https://www.youtube.com/embed/Ib4EX5u9hGk" frameBorder="0"/>
           </div>
         </div>
       </div>

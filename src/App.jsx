@@ -46,9 +46,9 @@ class App extends Component {
 		}
 	}
 
-	Heaters(heaters, actions) {
+	Heaters(heaters, files, actions) {
 		return (heaters.map(h => (
-			<HeaterControl key={h.id} heater={h} actions={actions} />
+			<HeaterControl key={h.id} heater={h} actions={actions} files={files}/>
 		)));
 	}
 
@@ -75,7 +75,7 @@ class App extends Component {
 						<FilesPanel />
 						<PrintInfoPanel />
 						<WifiPanel />
-						{this.Heaters(this.props.heaters, this.props.actions)}
+						{this.Heaters(this.props.heaters, this.props.files, this.props.actions)}
 						<CameraPanel />
 					</Masonry>
 				</div>
@@ -92,12 +92,14 @@ class App extends Component {
 
 App.propTypes = {
 	heaters: PropTypes.array.isRequired,
+	files: PropTypes.object.isRequired,
 	actions: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {
 	return {
-		heaters: state.heaters
+		heaters: state.heaters,
+		files: state.files
 	}
 }
 

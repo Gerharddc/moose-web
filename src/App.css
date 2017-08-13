@@ -122,7 +122,7 @@
 
 @media (min-width: 1500px) {
     .grid-item {
-      width: 24%;
+      width: 23%;
       min-width: 350px;
     }
     .grid-item-double {
