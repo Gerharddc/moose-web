@@ -1,5 +1,5 @@
 import printerSocket from '../PrinterSocket';
-import { Notify } from '../../notify';
+import { Notify } from '../notify';
 
 export function scanWifi(hosting = false) {
 	return function (dispatch) {
