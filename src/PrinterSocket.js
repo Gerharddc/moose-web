@@ -155,7 +155,7 @@ socket.onmessage = function (event) {
 			requestMap.delete(msg.id);
 		}
 		
-		Notify('Error', msg.error)
+		Notify('Error', msg.error);
 	}
 	else if (msg.status === 'success') {
         if (!msg.hasOwnProperty('id')) {
@@ -173,7 +173,10 @@ socket.onmessage = function (event) {
 		
 		requestMap.get(id).resolve(msg.response);
         requestMap.delete(msg.id);
-	} else {
+	} else if (msg.status === 'info') {
+		Notify('Info', msg.info);
+	}
+	else {
 		Notify('Error', 'Invalid message from server');
         console.log('Unknown status: ' + event.data);
 	}
