@@ -5,7 +5,7 @@ import EventEmitter from "event-emitter-es6";
 import { Notify } from './notify';
 import { ServerAddr } from './env';
 
-let socket = new WebSocket("ws://" + ServerAddr + ":8080")
+let socket = new WebSocket("ws://" + ServerAddr + ":8080");
 let requestMap = new Map();
 let store;
 
