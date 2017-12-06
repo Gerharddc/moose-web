@@ -59,6 +59,14 @@ class FilesPanel extends Component {
 							disabled={!(files.selectedFile)}>
 							Delete
 						</button>
+						<button type="button" className="btn"
+							onClick={(e) => {
+								actions.uploadFile(files.selectedFile);
+								e.stopPropagation();
+							}}
+							disabled={!(files.selectedFile)}>
+							Send to Duet
+						</button>
 					</div>
 					<input type="file" className="hidden" multiple={true}
 						ref={(input) => { this.fileInput = input }}

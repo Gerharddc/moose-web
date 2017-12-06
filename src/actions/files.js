@@ -20,6 +20,17 @@ export function getFiles() {
 	}
 }
 
+export function uploadFile(file) {
+	return function (dispatch) {
+		printerSocket.request({
+			request: 'UploadFile',
+			data: { path: file }
+		}).catch(resp => {
+			console.log('Error uploading file: ' + resp);
+		});
+	}
+}
+
 export function deleteFile(file) {
 	return function (dispatch) {
 		printerSocket.request({
